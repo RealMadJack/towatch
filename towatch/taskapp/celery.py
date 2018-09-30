@@ -33,7 +33,6 @@ class CeleryAppConfig(AppConfig):
             from raven.contrib.celery import register_signal as raven_register_signal
             from raven.contrib.celery import register_logger_signal as raven_register_logger_signal
 
-
             raven_client = RavenClient(dsn=settings.RAVEN_CONFIG['dsn'])
             raven_register_logger_signal(raven_client)
             raven_register_signal(raven_client)
