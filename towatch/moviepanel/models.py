@@ -19,15 +19,15 @@ class MoviePanel(TimeStampedModel):
         verbose_name_plural = _('Movie Panels')
 
     def __str__(self):
-        return f'Name: {self.name}. Status:'
+        return self.name
 
     def get_absolute_url(self):
         return reverse('moviepanel:home', kwargs={'moviepanel_slug': self.slug})
 
     def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = get_unique_slug()
-        return super(MoviePanel, self).save(*args, **kwargs)
+        self.slug = get_unique_slug(MoviePanel, self.name)
+
+        return super().save(*args, **kwargs)
 
 
 class MovieCategory(models.Model):
@@ -38,17 +38,17 @@ class Movie(models.Model):
     pass
 
 
-class MovieRanking(models.Model):  # Abstract?
-    pass
+# class MovieRanking(models.Model):  # Abstract?
+#     pass
 
 
-class Comment(models.Model):  # validate against spammers
-    pass
+# class Comment(models.Model):  # validate against spammers
+#     pass
 
 
-class CommentRanking(models.Model):  # Abstract?
-    pass
+# class CommentRanking(models.Model):  # Abstract?
+#     pass
 
 
-class Review(models.Model):  # comment with highest rank
-    pass
+# class Review(models.Model):  # comment with highest rank
+#     pass
