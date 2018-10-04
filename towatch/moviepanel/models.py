@@ -8,8 +8,26 @@ from model_utils.models import StatusModel, TimeStampedModel
 from ..utility.utils import get_unique_slug
 
 
-class MoviePanel(models.Model):
-    pass
+class MoviePanel(TimeStampedModel):
+    name = models.CharField(_('Movie Panel'), blank=True, max_length=255)
+    slug = models.SlugField(max_length=255, unique=True)
+    # STATUS = Choices('draft', 'published')
+    # status = models.CharField(choices=STATUS, default=STATUS.draft, max_length=20)
+
+    class Meta:
+        verbose_name = _('Movie Panel')
+        verbose_name_plural = _('Movie Panels')
+
+    def __str__(self):
+        return f'Name: {self.name}. Status:'
+
+    def get_absolute_url(self):
+        return reverse('moviepanel:home', kwargs={'moviepanel_slug': self.slug})
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = get_unique_slug()
+        return super(MoviePanel, self).save(*args, **kwargs)
 
 
 class MovieCategory(models.Model):
