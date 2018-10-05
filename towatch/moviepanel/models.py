@@ -11,8 +11,6 @@ from ..utility.utils import get_unique_slug
 class MoviePanel(TimeStampedModel):
     name = models.CharField(_('Movie Panel'), blank=True, max_length=255)
     slug = models.SlugField(max_length=255, unique=True)
-    # STATUS = Choices('draft', 'published')
-    # status = models.CharField(choices=STATUS, default=STATUS.draft, max_length=20)
 
     class Meta:
         verbose_name = _('Movie Panel')
@@ -26,7 +24,6 @@ class MoviePanel(TimeStampedModel):
 
     def save(self, *args, **kwargs):
         self.slug = get_unique_slug(MoviePanel, self.name)
-
         return super().save(*args, **kwargs)
 
 
