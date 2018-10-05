@@ -1,5 +1,5 @@
 from django.test import TestCase
 
 
-class MoviePanelTestCase(TestCase):
+class MoviePanelViews(TestCase):
     pass

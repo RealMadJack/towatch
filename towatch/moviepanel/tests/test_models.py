@@ -4,7 +4,7 @@ from django.urls import reverse
 from ..models import MoviePanel
 
 
-class MoviePanelTestCase(TestCase):
+class MoviePanelModel(TestCase):
     def setUp(self):
         self.moviepanel = MoviePanel(name='test panel')
         self.moviepanel.save()
@@ -14,9 +14,9 @@ class MoviePanelTestCase(TestCase):
     def test_moviepanel_absolute_url(self):
         abs_url = self.moviepanel.get_absolute_url()
         abs_url_1 = self.moviepanel_1.get_absolute_url()
-        reverse_url = reverse('moviepanel:home', kwargs={
+        reverse_url = reverse('moviepanel:panel', kwargs={
             'moviepanel_slug': self.moviepanel.slug})
-        reverse_url_1 = reverse('moviepanel:home', kwargs={
+        reverse_url_1 = reverse('moviepanel:panel', kwargs={
             'moviepanel_slug': self.moviepanel_1.slug})
 
         self.assertEqual(abs_url, reverse_url)

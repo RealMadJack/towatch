@@ -20,7 +20,7 @@ class MoviePanel(TimeStampedModel):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('moviepanel:home', kwargs={'moviepanel_slug': self.slug})
+        return reverse('moviepanel:panel', kwargs={'moviepanel_slug': self.slug})
 
     def save(self, *args, **kwargs):
         self.slug = get_unique_slug(MoviePanel, self.name)

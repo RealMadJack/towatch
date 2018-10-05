@@ -7,5 +7,6 @@ app_name = MoviepanelConfig.verbose_name
 
 
 urlpatterns = [
-    path('<slug:moviepanel_slug>', view=MoviePanelView.as_view(), name='home'),
+    path('', view=MoviePanelView.as_view(), name='home'),
+    path('<slug:moviepanel_slug>', view=MoviePanelView.as_view(), name='panel'),
 ]
