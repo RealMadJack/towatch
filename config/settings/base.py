@@ -71,8 +71,10 @@ THIRD_PARTY_APPS = [
     'rest_framework',
 ]
 LOCAL_APPS = [
-    'towatch.users.apps.UsersAppConfig',
-    'towatch.moviepanel.apps.MoviepanelConfig',
+    'towatch.apps.users.apps.UsersAppConfig',
+    'towatch.apps.moviepanel.apps.MoviepanelConfig',
+    'towatch.apps.comments.apps.CommentsConfig',
+    'towatch.apps.ranking.apps.RankingConfig',
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
