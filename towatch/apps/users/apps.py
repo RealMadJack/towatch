@@ -3,7 +3,7 @@ from django.apps import AppConfig
 
 class UsersAppConfig(AppConfig):
 
-    name = "towatch.users"
+    name = "towatch.apps.users"
     verbose_name = "Users"
 
     def ready(self):

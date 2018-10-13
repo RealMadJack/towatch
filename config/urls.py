@@ -10,14 +10,11 @@ urlpatterns = [
     # Django Admin, use {% url 'admin:index' %}
     path(settings.ADMIN_URL, admin.site.urls),
     # User management
-    path(
-        "users/",
-        include("towatch.users.urls", namespace="users"),
-    ),
+    path("users/", include("towatch.apps.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
 
     # API
-    path('api/', include('towatch.moviepanel.urls')),
+    path('api/', include('towatch.apps.moviepanel.urls')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
     # Your stuff: custom urls includes go here

@@ -1,7 +1,7 @@
 import pytest
 
-from towatch.users.forms import UserCreationForm
-from towatch.users.tests.factories import UserFactory
+from towatch.apps.users.forms import UserCreationForm
+from towatch.apps.users.tests.factories import UserFactory
 
 pytestmark = pytest.mark.django_db
 

@@ -9,11 +9,11 @@ from ..utility.utils import get_unique_slug
 
 
 class MoviePanel(TimeStampedModel):
-    name = models.CharField(_('Movie Panel'), blank=True, max_length=255)
+    name = models.CharField(_('Movie Panel'), blank=False, max_length=255)
     slug = models.SlugField(max_length=255, unique=True)
 
     class Meta:
-        verbose_name = _('Movie Panel')
+        verbose_name = _('Movie Panel')  # self.name Panel
         verbose_name_plural = _('Movie Panels')
 
     def __str__(self):
@@ -27,8 +27,32 @@ class MoviePanel(TimeStampedModel):
         return super().save(*args, **kwargs)
 
 
-class MovieCategory(models.Model):
-    pass
+class MovieCategory(TimeStampedModel):
+    moviepanel = models.ForeignKey(
+        MoviePanel,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='moviecategories',
+        related_query_name='%(class)s',
+    )
+    name = models.CharField(_('Movie Category'), blank=False, default='', max_length=255)
+    slug = models.SlugField(default='', max_length=255, unique=True)
+
+    class Meta:
+        verbose_name = _('Movie Category')
+        verbose_name_plural = _('Movie Categories')
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('moviepanel:category', kwargs={
+            'moviepanel_slug': self.moviepanel.slug,
+            'moviecategory_slug': self.slug
+        })
+
+    def save(self, *args, **kwargs):
+        return super().save(*args, **kwargs)
 
 
 class Movie(models.Model):
