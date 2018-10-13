@@ -11,4 +11,4 @@ class MoviePanelSerializer(serializers.ModelSerializer):
 class MovieCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = MovieCategory
-        field = '__all__'
+        fields = '__all__'

@@ -7,3 +7,10 @@ class MoviePanelAdmin(admin.ModelAdmin):
     model = MoviePanel
     readonly_fields = ('slug', )
     # list_display = ('name', 'created', 'modified', )
+
+
+@admin.register(MovieCategory)
+class MovieCategoryAdmin(admin.ModelAdmin):
+    model = MovieCategory
+    readonly_fields = ('slug', )
+    # list_display = ('name', 'created', 'modified', )
