@@ -1,7 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
-from model_utils import Choices
+from model_utils import Choices, FieldTracker
 from model_utils.fields import StatusField
 from model_utils.models import StatusModel, TimeStampedModel
 
@@ -11,6 +11,7 @@ from .utils import get_unique_slug
 class MoviePanel(TimeStampedModel):
     name = models.CharField(_('Movie Panel'), blank=False, max_length=255)
     slug = models.SlugField(max_length=255, unique=True)
+    tracker = FieldTracker()
 
     class Meta:
         verbose_name = _('Movie Panel')  # self.name Panel
@@ -23,7 +24,7 @@ class MoviePanel(TimeStampedModel):
         return reverse('moviepanel:panel', kwargs={'moviepanel_slug': self.slug})
 
     def save(self, *args, **kwargs):
-        if not self.slug:
+        if not self.slug or self.name != self.tracker.previous('name'):
             self.slug = get_unique_slug(MoviePanel, self.name)
         return super().save(*args, **kwargs)
 
@@ -38,6 +39,7 @@ class MovieCategory(TimeStampedModel):
     )
     name = models.CharField(_('Movie Category'), blank=False, default='', max_length=255)
     slug = models.SlugField(default='', max_length=255, unique=True)
+    tracker = FieldTracker()
 
     class Meta:
         verbose_name = _('Movie Category')
@@ -53,7 +55,7 @@ class MovieCategory(TimeStampedModel):
         })
 
     def save(self, *args, **kwargs):
-        if not self.slug:
+        if not self.slug or self.name != self.tracker.previous('name'):
             self.slug = get_unique_slug(MovieCategory, self.name)
         return super().save(*args, **kwargs)
 

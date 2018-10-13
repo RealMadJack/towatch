@@ -21,4 +21,4 @@ class MoviePanelUrl(TestCase):
 
 class MovieCategoryModel(TestCase):
     def setUp(self):
-        pass
+        self.client = Client()

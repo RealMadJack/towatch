@@ -36,6 +36,26 @@ class MoviePanelModel(TestCase):
         abs_url = self.moviepanel.get_absolute_url()
         self.assertNotEqual(abs_url, '123')
 
+    def test_moviepanel_save_unique_slug(self):
+        self.assertEqual(self.moviepanel.slug, 'test-panel')
+        self.assertEqual(self.moviepanel_1.slug, 'test-panel-1')
+        self.moviepanel.name = 'test new panel'
+        self.moviepanel.save()
+        self.moviepanel_1.name = 'test new panel'
+        self.moviepanel_1.save()
+        self.assertEqual(self.moviepanel.slug, 'test-new-panel')
+        self.assertEqual(self.moviepanel_1.slug, 'test-new-panel-1')
+
+    def test_moviepanel_save_invalid_unique_slug(self):
+        self.assertEqual(self.moviepanel.slug, 'test-panel')
+        self.assertEqual(self.moviepanel_1.slug, 'test-panel-1')
+        self.moviepanel.name = 'test new panel'
+        self.moviepanel.save()
+        self.moviepanel_1.name = 'test new panel'
+        self.moviepanel_1.save()
+        self.assertNotEqual(self.moviepanel.slug, 'test-panel')
+        self.assertNotEqual(self.moviepanel_1.slug, 'test-panel-1')
+
 
 class MovieCategoryModel(TestCase):
     def setUp(self):
@@ -63,3 +83,15 @@ class MovieCategoryModel(TestCase):
     def test_moviecategory_invalid_absolute_url(self):
         abs_url = self.moviecategory.get_absolute_url()
         self.assertNotEqual(abs_url, '123')
+
+    def test_moviecategory_save_unique_slug(self):
+        self.assertEqual(self.moviecategory.slug, 'test-category')
+        self.moviecategory.name = 'test new category'
+        self.moviecategory.save()
+        self.assertEqual(self.moviecategory.slug, 'test-new-category')
+
+    def test_moviecategory_save_invalid_unique_slug(self):
+        self.assertEqual(self.moviecategory.slug, 'test-category')
+        self.moviecategory.name = 'test new category'
+        self.moviecategory.save()
+        self.assertNotEqual(self.moviecategory.slug, 'test-new-category-1')
