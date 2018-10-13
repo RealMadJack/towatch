@@ -10,7 +10,7 @@ from .utils import get_unique_slug
 
 class MoviePanel(TimeStampedModel):
     name = models.CharField(_('Movie Panel'), blank=False, max_length=255)
-    slug = models.SlugField(max_length=255, unique=True)
+    slug = models.SlugField(max_length=112, unique=True)
     tracker = FieldTracker()
 
     class Meta:
@@ -38,7 +38,7 @@ class MovieCategory(TimeStampedModel):
         related_query_name='%(class)s',
     )
     name = models.CharField(_('Movie Category'), blank=False, default='', max_length=255)
-    slug = models.SlugField(default='', max_length=255, unique=True)
+    slug = models.SlugField(default='', max_length=112, unique=True)
     tracker = FieldTracker()
 
     class Meta:
@@ -60,8 +60,40 @@ class MovieCategory(TimeStampedModel):
         return super().save(*args, **kwargs)
 
 
-class Movie(models.Model):
-    pass
+class Movie(TimeStampedModel):
+    name = models.CharField(_('Movie name'), blank=True, max_length=255)
+    slug = models.SlugField(max_length=112, unique=True)
+    description = models.TextField(_('Movie description'), max_length=1024)
+    author = models.CharField()
+    actors = models.CharField()
+    release = models.DateField()
+    poster = models.ImageField()
+    poster_url = models.URLField()
+    trailer = models.URLField()
+    review = models.TextField(max_length=512)
+    movie_player = models.URLField()
+    rating = models.PositiveIntegerField()
+    imdb_id = models.CharField()
+
+    class Meta:
+        ordering = ['-created']
+        verbose_name = _('Movie')
+        verbose_name_plural = _('Movies')
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('moviepanel:movie', kwargs={
+            'moviepanel_slug': self.category.moviepanel.slug,
+            'moviecategory_slug': self.category.slug,
+            'movie_slug': self.slug
+        })
+
+    def save(self, *args, **kwargs):
+        if not self.slug or self.name != self.tracker.previous('name'):
+            self.slug = get_unique_slug(Movie, self.name)
+        return super().save(*args, **kwargs)
 
 
 # class MovieRanking(models.Model):  # Abstract?
