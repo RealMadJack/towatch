@@ -5,7 +5,7 @@ from model_utils import Choices
 from model_utils.fields import StatusField
 from model_utils.models import StatusModel, TimeStampedModel
 
-from ..utility.utils import get_unique_slug
+from .utils import get_unique_slug
 
 
 class MoviePanel(TimeStampedModel):
@@ -23,7 +23,8 @@ class MoviePanel(TimeStampedModel):
         return reverse('moviepanel:panel', kwargs={'moviepanel_slug': self.slug})
 
     def save(self, *args, **kwargs):
-        self.slug = get_unique_slug(MoviePanel, self.name)
+        if not self.slug:
+            self.slug = get_unique_slug(MoviePanel, self.name)
         return super().save(*args, **kwargs)
 
 
@@ -52,6 +53,8 @@ class MovieCategory(TimeStampedModel):
         })
 
     def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = get_unique_slug(MovieCategory, self.name)
         return super().save(*args, **kwargs)
 
 

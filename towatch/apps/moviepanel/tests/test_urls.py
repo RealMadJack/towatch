@@ -2,7 +2,7 @@ from django.urls import reverse, resolve
 from django.test import Client, TestCase
 
 
-class MoviePanelUrls(TestCase):
+class MoviePanelUrl(TestCase):
     def setUp(self):
         self.client = Client()
 
@@ -17,3 +17,8 @@ class MoviePanelUrls(TestCase):
             reverse('moviepanel:panel', kwargs={'moviepanel_slug': 'test-moviepanel'}),
             '/test-moviepanel-123'
         )
+
+
+class MovieCategoryModel(TestCase):
+    def setUp(self):
+        pass
