@@ -2,6 +2,8 @@ from django.utils.text import slugify
 
 
 def get_unique_slug(cls, name):
+    """TODO: russian translation slugify"""
+
     slug = slugify(name)
     unique_slug = slug
     num = 1

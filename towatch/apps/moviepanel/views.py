@@ -40,8 +40,8 @@ class MovieView(APIView):
 
     def get(self, request, *args, **kwargs):
         try:
-            moviegenre = Movie.objects.get(slug=kwargs['movie_slug'])
-            serializer = MovieSerializer(moviegenre)
+            movie = Movie.objects.get(slug=kwargs['movie_slug'])
+            serializer = MovieSerializer(movie)
             return Response(serializer.data)
-        except MovieGenre.DoesNotExist:
+        except Movie.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
