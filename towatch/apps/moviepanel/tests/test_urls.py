@@ -17,24 +17,24 @@ class MoviePanelUrl(TestCase):
         self.assertEqual(self.resolver.view_name, 'moviepanel:panel')
 
     def test_moviepanel_resolve_invalid(self):
-        self.assertNotEqual(self.resolver.view_name, 'moviepanel:category')
+        self.assertNotEqual(self.resolver.view_name, 'moviepanel:genre')
 
 
-class MovieCategoryUrl(TestCase):
+class MovieGenreUrl(TestCase):
     def setUp(self):
-        self.url = reverse('moviepanel:category', kwargs={
+        self.url = reverse('moviepanel:genre', kwargs={
                            'moviepanel_slug': 'moviepanel',
-                           'moviecategory_slug': 'moviecategory'})
-        self.resolver = resolve('/api/moviepanel/movie-category')
+                           'moviegenre_slug': 'moviegenre'})
+        self.resolver = resolve('/api/moviepanel/movie-genre')
 
-    def test_moviecategory_reverse(self):
-        self.assertEqual(self.url, '/api/moviepanel/moviecategory')
+    def test_moviegenre_reverse(self):
+        self.assertEqual(self.url, '/api/moviepanel/moviegenre')
 
-    def test_moviecategory_reverse_invalid(self):
-        self.assertNotEqual(self.url, '/api/moviepanel/moviecategory-123')
+    def test_moviegenre_reverse_invalid(self):
+        self.assertNotEqual(self.url, '/api/moviepanel/moviegenre-123')
 
     def test_moviepanel_resolve(self):
-        self.assertEqual(self.resolver.view_name, 'moviepanel:category')
+        self.assertEqual(self.resolver.view_name, 'moviepanel:genre')
 
     def test_moviepanel_resolve_invalid(self):
         self.assertNotEqual(self.resolver.view_name, 'moviepanel:panel')

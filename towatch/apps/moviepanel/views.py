@@ -3,8 +3,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from .models import MoviePanel, MovieCategory
-from .serializers import MoviePanelSerializer, MovieCategorySerializer
+from .models import MoviePanel, MovieGenre, Movie
+from .serializers import MoviePanelSerializer, MovieGenreSerializer, MovieSerializer
 
 
 class MoviePanelView(APIView):
@@ -23,13 +23,25 @@ class MoviePanelView(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
 
-class MovieCategoryView(APIView):
-    """Movie category api-view"""
+class MovieGenreView(APIView):
+    """Movie genre api-view"""
 
     def get(self, request, *args, **kwargs):
         try:
-            moviecategory = MovieCategory.objects.select_related().get(slug=kwargs['moviecategory_slug'])
-            serializer = MovieCategorySerializer(moviecategory)
+            moviegenre = MovieGenre.objects.select_related().get(slug=kwargs['moviegenre_slug'])
+            serializer = MovieGenreSerializer(moviegenre)
             return Response(serializer.data)
-        except MovieCategory.DoesNotExist:
+        except MovieGenre.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+class MovieView(APIView):
+    """Movie api-view"""
+
+    def get(self, request, *args, **kwargs):
+        try:
+            moviegenre = Movie.objects.get(slug=kwargs['movie_slug'])
+            serializer = MovieSerializer(moviegenre)
+            return Response(serializer.data)
+        except MovieGenre.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
