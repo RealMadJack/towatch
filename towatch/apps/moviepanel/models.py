@@ -68,7 +68,7 @@ class Movie(TimeStampedModel):
         related_name='movies',
         related_query_name='%(class)s',
     )
-    moviegenre = models.ManyToManyField(MovieGenre)
+    moviegenre = models.ManyToManyField(MovieGenre, related_name='movies')
     name = models.CharField(_('Name'), blank=False, default='', max_length=255)
     slug = models.SlugField(default='', max_length=255, unique=True)
     country = models.CharField(_('Country'), blank=True, default='', max_length=255)

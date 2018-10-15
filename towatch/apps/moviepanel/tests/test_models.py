@@ -100,7 +100,14 @@ class MovieGenreModel(TestCase):
 class MovieModel(TestCase):
     def setUp(self):
         self.moviepanel = MoviePanel.objects.create(name='test panel')
+        self.moviepanel_1 = MoviePanel.objects.create(name='movies')
+        self.moviegenre = MovieGenre.objects.create(name='horror', moviepanel=self.moviepanel)
+        self.moviegenre_1 = MovieGenre.objects.create(name='comedy', moviepanel=self.moviepanel)
+        self.moviegenre_2 = MovieGenre.objects.create(name='action', moviepanel=self.moviepanel_1)
         self.movie = Movie.objects.create(name='test movie', description='test description', moviepanel=self.moviepanel)
+        self.movie_1 = Movie.objects.create(name='kill bill', description='blood bath', moviepanel=self.moviepanel_1)
+        self.movie.moviegenre.add(self.moviegenre, self.moviegenre_1)
+        self.movie_1.moviegenre.add(self.moviegenre, self.moviegenre_1, self.moviegenre_2)
 
     def test_moviepanel_data(self):
         self.assertEqual(self.movie.name, 'test movie')
@@ -139,4 +146,63 @@ class MovieModel(TestCase):
         self.assertNotEqual(self.movie.slug, 'test-new-movie-1')
 
     def test_movie_moviegenre_m2m(self):
-        pass
+        # m2m add test
+        moviegenre_list = list(self.movie.moviegenre.all())
+        moviegenre_list_1 = list(self.movie_1.moviegenre.all())
+        self.assertEqual(len(moviegenre_list), 2)
+        self.assertEqual(len(moviegenre_list_1), 3)
+        self.assertEqual(moviegenre_list[0].name, 'horror')
+        self.assertEqual(moviegenre_list[-1].name, 'comedy')
+        self.assertEqual(moviegenre_list_1[0].name, 'horror')
+        self.assertEqual(moviegenre_list_1[-1].name, 'action')
+        # m2m remove test
+        self.movie.moviegenre.remove(moviegenre_list[0])
+        self.movie_1.moviegenre.remove(moviegenre_list[0])
+        moviegenre_list = list(self.movie.moviegenre.all())
+        moviegenre_list_1 = list(self.movie_1.moviegenre.all())
+        self.assertEqual(len(moviegenre_list), 1)
+        self.assertEqual(len(moviegenre_list_1), 2)
+        self.assertEqual(moviegenre_list[0].name, 'comedy')
+        self.assertEqual(moviegenre_list_1[0].name, 'comedy')
+
+    def test_movie_moviegenre_m2m_invalid(self):
+        moviegenre_list = self.movie.moviegenre.all()
+        moviegenre_list_1 = self.movie_1.moviegenre.all()
+        self.assertNotEqual(len(moviegenre_list), 0)
+        self.assertNotEqual(len(moviegenre_list_1), 0)
+        self.assertNotEqual(moviegenre_list[0].name, '')
+        self.assertNotEqual(moviegenre_list_1[0].name, '')
+        self.movie.moviegenre.remove(moviegenre_list[0])
+        self.movie_1.moviegenre.remove(moviegenre_list[0])
+        # m2m remove test
+        moviegenre_list = list(self.movie.moviegenre.all())
+        moviegenre_list_1 = list(self.movie_1.moviegenre.all())
+        self.assertNotEqual(len(moviegenre_list), 2)
+        self.assertNotEqual(len(moviegenre_list_1), 3)
+        self.assertNotEqual(moviegenre_list[0].name, 'horror')
+        self.assertNotEqual(moviegenre_list_1[0].name, 'horror')
+
+    def test_moviegenre_movie_m2m_reverse(self):
+        # m2m add test
+        movie_list = list(self.moviegenre.movies.all())
+        movie_list_1 = list(self.moviegenre_1.movies.all())
+        movie_list_2 = list(self.moviegenre_2.movies.all())
+        self.assertEqual(len(movie_list), 2)
+        self.assertEqual(len(movie_list_1), 2)
+        self.assertEqual(len(movie_list_2), 1)
+        self.assertEqual(movie_list[0].name, 'kill bill')
+        self.assertEqual(movie_list[-1].name, 'test movie')
+        self.assertEqual(movie_list_2[0].name, 'kill bill')
+        self.assertEqual(movie_list_2[-1].name, 'kill bill')
+
+    def test_moviegenre_movie_m2m_reverse_invalid(self):
+        # m2m add test
+        movie_list = list(self.moviegenre.movies.all())
+        movie_list_1 = list(self.moviegenre_1.movies.all())
+        movie_list_2 = list(self.moviegenre_2.movies.all())
+        self.assertNotEqual(len(movie_list), 0)
+        self.assertNotEqual(len(movie_list_1), 0)
+        self.assertNotEqual(len(movie_list_2), 0)
+        self.assertNotEqual(movie_list[0].name, '')
+        self.assertNotEqual(movie_list_1[0].name, '')
+        self.assertNotEqual(movie_list_2[0].name, '')
