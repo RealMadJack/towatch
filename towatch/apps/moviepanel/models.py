@@ -9,7 +9,7 @@ from .utils import get_unique_slug
 
 
 class MoviePanel(TimeStampedModel):
-    name = models.CharField(_('Panel name'), blank=False, null=True, max_length=112)
+    name = models.CharField(_('Panel name'), blank=False, default='', max_length=112)
     slug = models.SlugField(max_length=112, unique=True)
     tracker = FieldTracker()
 
@@ -37,7 +37,7 @@ class MovieGenre(TimeStampedModel):
         related_name='moviegenres',
         related_query_name='%(class)s',
     )
-    name = models.CharField(_('Movie Genre'), blank=False, null=True, max_length=112)
+    name = models.CharField(_('Movie Genre'), blank=False, default='', max_length=112)
     slug = models.SlugField(default='', max_length=112, unique=True)
     tracker = FieldTracker()
 
@@ -68,12 +68,13 @@ class Movie(TimeStampedModel):
         related_name='movies',
         related_query_name='%(class)s',
     )
+    moviegenre = models.ManyToManyField(MovieGenre)
     name = models.CharField(_('Name'), blank=False, default='', max_length=255)
     slug = models.SlugField(default='', max_length=255, unique=True)
     country = models.CharField(_('Country'), blank=True, default='', max_length=255)
     description = models.TextField(_('Description'), blank=False, default='', max_length=512)
     duration = models.PositiveIntegerField(_('Duration'), blank=True, default=0)
-    poster = models.ImageField(_('Poster'), blank=True, default='', upload_to='posters')
+    poster = models.ImageField(_('Poster'), blank=True, null=True, upload_to='posters')
     poster_url = models.URLField(_('Poster URL'), blank=True, default='', max_length=200)
     release_date = models.PositiveIntegerField(_('Release date'), blank=True, default=0)
     trailer = models.URLField(_('Trailer'), blank=True, default='', max_length=200)

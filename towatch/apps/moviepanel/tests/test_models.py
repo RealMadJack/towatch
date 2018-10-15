@@ -137,3 +137,6 @@ class MovieModel(TestCase):
         self.movie.name = 'test new movie'
         self.movie.save()
         self.assertNotEqual(self.movie.slug, 'test-new-movie-1')
+
+    def test_movie_moviegenre_m2m(self):
+        pass
