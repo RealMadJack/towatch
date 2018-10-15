@@ -145,6 +145,16 @@ class MovieModel(TestCase):
         self.movie.save()
         self.assertNotEqual(self.movie.slug, 'test-new-movie-1')
 
+    def test_movie_status(self):
+        self.assertEqual(self.movie.status, 'invisible')
+        self.movie.status = self.movie.STATUS['visible']
+        self.movie.save()
+        self.assertEqual(self.movie.status, 'visible')
+
+    def test_movie_status_invalid(self):
+        self.assertNotEqual(self.movie.status, 'visible')
+        self.assertNotEqual(self.movie.status, '')
+
     def test_movie_moviegenre_m2m(self):
         # m2m add test
         moviegenre_list = list(self.movie.moviegenre.all())

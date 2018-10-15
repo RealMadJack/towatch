@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from model_utils import Choices, FieldTracker
 from model_utils.fields import StatusField
-from model_utils.models import StatusModel, TimeStampedModel
+from model_utils.models import TimeStampedModel
 
 from .utils import get_unique_slug
 
@@ -77,9 +77,10 @@ class Movie(TimeStampedModel):
     poster = models.ImageField(_('Poster'), blank=True, null=True, upload_to='posters')
     poster_url = models.URLField(_('Poster URL'), blank=True, default='', max_length=200)
     release_date = models.PositiveIntegerField(_('Release date'), blank=True, default=0)
+    STATUS = Choices('invisible', 'visible')
+    status = StatusField()
     trailer = models.URLField(_('Trailer'), blank=True, default='', max_length=200)
     tracker = FieldTracker()
-    # status = Choices()
     # producer = models.CharField()
     # directors = models.ManyToManyField(Person, through='Director')
     # actors = models.ForeignKey()
