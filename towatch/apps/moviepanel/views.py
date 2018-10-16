@@ -1,10 +1,29 @@
+from django.shortcuts import get_object_or_404
 from collections.abc import Iterable
+from rest_framework import viewsets, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
 
 from .models import MoviePanel, MovieGenre, Movie
 from .serializers import MoviePanelSerializer, MovieGenreSerializer, MovieSerializer
+
+
+class MoviePanelViewSet(viewsets.ReadOnlyModelViewSet):
+    """Movie panel viewset"""
+    queryset = MoviePanel.objects.all()
+    serializer_class = MoviePanelSerializer
+
+
+class MovieGenreViewSet(viewsets.ReadOnlyModelViewSet):
+    """Movie genre viewset"""
+    queryset = MovieGenre.objects.all()
+    serializer_class = MovieGenreSerializer
+
+
+class MovieViewSet(viewsets.ReadOnlyModelViewSet):
+    """Movie viewset"""
+    queryset = Movie.objects.all()
+    serializer_class = MovieSerializer
 
 
 class MoviePanelView(APIView):

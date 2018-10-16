@@ -2,7 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from model_utils import Choices, FieldTracker
-from model_utils.fields import StatusField
+from model_utils.fields import StatusField, MonitorField
 from model_utils.models import TimeStampedModel
 
 from .utils import get_unique_slug
@@ -79,6 +79,7 @@ class Movie(TimeStampedModel):
     release_date = models.PositiveIntegerField(_('Release date'), blank=True, default=0)
     STATUS = Choices('invisible', 'visible')
     status = StatusField()
+    published_at = MonitorField(monitor='status', when=['visible'])
     trailer = models.URLField(_('Trailer'), blank=True, default='', max_length=200)
     tracker = FieldTracker()
     # producer = models.CharField()
@@ -108,6 +109,10 @@ class Movie(TimeStampedModel):
         if not self.slug or self.name != self.tracker.previous('name'):
             self.slug = get_unique_slug(Movie, self.name)
         return super().save(*args, **kwargs)
+
+
+# class MoviePlayer(models.Model):  # Abstract?
+#     pass  # o2m
 
 
 # class MovieRanking(models.Model):  # Abstract?

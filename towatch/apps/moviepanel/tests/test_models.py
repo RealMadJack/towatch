@@ -147,7 +147,7 @@ class MovieModel(TestCase):
 
     def test_movie_status(self):
         self.assertEqual(self.movie.status, 'invisible')
-        self.movie.status = self.movie.STATUS['visible']
+        self.movie.status = self.movie.STATUS.visible
         self.movie.save()
         self.assertEqual(self.movie.status, 'visible')
 
