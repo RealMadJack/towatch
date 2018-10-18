@@ -21,20 +21,20 @@ class MoviePanelModel(TestCase):
         self.assertNotEqual(self.moviepanel_1.name, 'test panel 2')
         self.assertNotEqual(self.moviepanel_1.slug, 'test-panel_1')
 
-    def test_moviepanel_absolute_url(self):
-        abs_url = self.moviepanel.get_absolute_url()
-        abs_url_1 = self.moviepanel_1.get_absolute_url()
-        reverse_url = reverse('moviepanel:panel', kwargs={
-            'moviepanel_slug': self.moviepanel.slug})
-        reverse_url_1 = reverse('moviepanel:panel', kwargs={
-            'moviepanel_slug': self.moviepanel_1.slug})
+    # def test_moviepanel_absolute_url(self):
+    #     abs_url = self.moviepanel.get_absolute_url()
+    #     abs_url_1 = self.moviepanel_1.get_absolute_url()
+    #     reverse_url = reverse('moviepanel:panel', kwargs={
+    #         'moviepanel_slug': self.moviepanel.slug})
+    #     reverse_url_1 = reverse('moviepanel:panel', kwargs={
+    #         'moviepanel_slug': self.moviepanel_1.slug})
 
-        self.assertEqual(abs_url, reverse_url)
-        self.assertEqual(abs_url_1, reverse_url_1)
+    #     self.assertEqual(abs_url, reverse_url)
+    #     self.assertEqual(abs_url_1, reverse_url_1)
 
-    def test_moviepanel_absolute_url_invalid(self):
-        abs_url = self.moviepanel.get_absolute_url()
-        self.assertNotEqual(abs_url, '123')
+    # def test_moviepanel_absolute_url_invalid(self):
+    #     abs_url = self.moviepanel.get_absolute_url()
+    #     self.assertNotEqual(abs_url, '123')
 
     def test_moviepanel_save_unique_slug(self):
         self.assertEqual(self.moviepanel.slug, 'test-panel')
@@ -72,17 +72,17 @@ class MovieGenreModel(TestCase):
         self.assertNotEqual(self.moviegenre.slug, 'not_123')
         self.assertNotEqual(self.moviegenre.moviepanel.name, 'incorrect')
 
-    def test_moviegenre_absolute_url(self):
-        abs_url = self.moviegenre.get_absolute_url()
-        reverse_url = reverse('moviepanel:genre', kwargs={
-            'moviepanel_slug': self.moviegenre.moviepanel.slug,
-            'moviegenre_slug': self.moviegenre.slug,
-        })
-        self.assertEqual(abs_url, reverse_url)
+    # def test_moviegenre_absolute_url(self):
+    #     abs_url = self.moviegenre.get_absolute_url()
+    #     reverse_url = reverse('moviepanel:genre', kwargs={
+    #         'moviepanel_slug': self.moviegenre.moviepanel.slug,
+    #         'moviegenre_slug': self.moviegenre.slug,
+    #     })
+    #     self.assertEqual(abs_url, reverse_url)
 
-    def test_moviegenre_absolute_url_invalid(self):
-        abs_url = self.moviegenre.get_absolute_url()
-        self.assertNotEqual(abs_url, '123')
+    # def test_moviegenre_absolute_url_invalid(self):
+    #     abs_url = self.moviegenre.get_absolute_url()
+    #     self.assertNotEqual(abs_url, '123')
 
     def test_moviegenre_save_unique_slug(self):
         self.assertEqual(self.moviegenre.slug, 'test-genre')
@@ -121,17 +121,17 @@ class MovieModel(TestCase):
         self.assertNotEqual(self.movie.slug, 'not_123')
         self.assertNotEqual(self.movie.moviepanel.name, 'incorrect')
 
-    def test_movie_absolute_url(self):
-        abs_url = self.movie.get_absolute_url()
-        reverse_url = reverse('moviepanel:movie', kwargs={
-            'moviepanel_slug': self.movie.moviepanel.slug,
-            'movie_slug': self.movie.slug,
-        })
-        self.assertEqual(abs_url, reverse_url)
+    # def test_movie_absolute_url(self):
+    #     abs_url = self.movie.get_absolute_url()
+    #     reverse_url = reverse('moviepanel:movie', kwargs={
+    #         'moviepanel_slug': self.movie.moviepanel.slug,
+    #         'movie_slug': self.movie.slug,
+    #     })
+    #     self.assertEqual(abs_url, reverse_url)
 
-    def test_movie_absolute_url_invalid(self):
-        abs_url = self.movie.get_absolute_url()
-        self.assertNotEqual(abs_url, '123')
+    # def test_movie_absolute_url_invalid(self):
+    #     abs_url = self.movie.get_absolute_url()
+    #     self.assertNotEqual(abs_url, '123')
 
     def test_movie_save_unique_slug(self):
         self.assertEqual(self.movie.slug, 'test-movie')
