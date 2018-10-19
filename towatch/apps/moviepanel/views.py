@@ -1,4 +1,3 @@
-from django.shortcuts import get_object_or_404
 from collections.abc import Iterable
 from rest_framework import viewsets, status
 from rest_framework.views import APIView
