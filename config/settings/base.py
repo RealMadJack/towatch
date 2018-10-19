@@ -69,6 +69,7 @@ THIRD_PARTY_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'rest_framework',
+    'corsheaders',
 ]
 LOCAL_APPS = [
     'towatch.apps.users.apps.UsersAppConfig',
@@ -132,15 +133,21 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/dev/ref/settings/#middleware
 MIDDLEWARE = [
     # 'django_hosts.middleware.HostsRequestMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # 'django_hosts.middleware.HostsResponseMiddleware',
 ]
+
+CORS_ORIGIN_WHITELIST = (
+    'localhost:3000',
+    '127.0.0.1:3000',
+)
 
 # STATIC
 # ------------------------------------------------------------------------------
@@ -151,8 +158,14 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
 STATICFILES_DIRS = [
     str(APPS_DIR.path('static')),
-    str(ROOT_DIR.path('frontend/build/static')),
 ]
+if DEBUG:
+    STATICFILES_DIRS += [
+        str(ROOT_DIR.path('frontend/build/')),
+        str(ROOT_DIR.path('frontend/build/static/')), ]
+else:
+    # something to serve webpack locally
+    pass
 # https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -181,7 +194,6 @@ TEMPLATES = [
         # https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
         'DIRS': [
             str(APPS_DIR.path('templates')),
-            str(ROOT_DIR.path('frontend/build')),
         ],
         'OPTIONS': {
             # https://docs.djangoproject.com/en/dev/ref/settings/#template-debug
@@ -206,6 +218,11 @@ TEMPLATES = [
         },
     },
 ]
+if DEBUG:
+    TEMPLATES[0]['DIRS'] += [str(ROOT_DIR.path('frontend/build')), ]
+else:
+    # something to serve webpack locally
+    pass
 # http://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -271,3 +288,12 @@ SOCIALACCOUNT_ADAPTER = 'towatch.apps.users.adapters.SocialAccountAdapter'
 
 # Your stuff...
 # ------------------------------------------------------------------------------
+# REST
+# REST_FRAMEWORK = {
+#     'DEFAULT_RENDERER_CLASSES': (
+#         'rest_framework.renderers.JSONRenderer',
+#     ),
+#     'DEFAULT_PARSER_CLASSES': (
+#         'rest_framework.parsers.JSONParser',
+#     )
+# }

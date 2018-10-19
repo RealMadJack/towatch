@@ -6,8 +6,6 @@ from django.views.generic import TemplateView
 from django.views import defaults as default_views
 
 urlpatterns = [
-    # render react build template
-    path("", TemplateView.as_view(template_name="index.html")),
     # Django Admin, use {% url 'admin:index' %}
     path(settings.ADMIN_URL, admin.site.urls),
     # User management
@@ -18,7 +16,8 @@ urlpatterns = [
     path('api/', include('towatch.apps.moviepanel.urls')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
-    # Your stuff: custom urls includes go here
+    # render react build template
+    path("", TemplateView.as_view(template_name="index.html")),
 ] + static(
     settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
 )
