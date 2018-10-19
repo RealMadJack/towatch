@@ -1,25 +1,18 @@
 import axios from 'axios';
 import React, {Component} from 'react';
-import './App.css';
+import Header from './components/header/Header'
+
 
 class App extends Component {
-  state = {
-    api: [],
-  };
+  state = {};
 
   componentDidMount() {
-    axios.get('http://localhost:8000/api/')
-      .then(res => {
-        console.log(res.data)
-        const api = res.data;
-        this.setState({ api });
-      })
   }
 
   render() {
     return (
       <div className="App">
-        <a href={ this.state.api['genres'] }>{ this.state.api['genres'] }</a>
+        <Header />
       </div>
     );
   }
