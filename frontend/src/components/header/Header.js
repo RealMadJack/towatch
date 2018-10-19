@@ -21,7 +21,7 @@ export default class Header extends Component {
   }
 
   render() {
-    const moviepanels_menu = this.state.moviepanels.map(function (moviepanel) {
+    const moviepanels_list = this.state.moviepanels.map((moviepanel) => {
       return (
         <li className="nav-item dropdown" key={moviepanel.id}>
           <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -51,7 +51,7 @@ export default class Header extends Component {
               <li className="nav-item">
                 <a className="nav-link" href="#">Features</a>
               </li>
-              {moviepanels_menu}
+              {moviepanels_list}
             </ul>
           </div>
         </nav>

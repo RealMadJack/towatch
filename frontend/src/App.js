@@ -1,6 +1,6 @@
-import axios from 'axios';
 import React, {Component} from 'react';
 import Header from './components/header/Header'
+import Movies from './components/movies/Movies'
 
 
 class App extends Component {
@@ -13,6 +13,7 @@ class App extends Component {
     return (
       <div className="App">
         <Header />
+        <Movies />
       </div>
     );
   }
