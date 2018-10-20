@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, {Component} from 'react';
 
-import './Header.css';
+import './Header.sass';
 
 
 export default class Header extends Component {
