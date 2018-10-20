@@ -5,19 +5,23 @@ import './Header.sass';
 
 
 export default class Header extends Component {
-  state = {
-    moviepanels: [],
+  constructor(props) {
+    super(props)
+    this.state = {
+      moviepanels: [],
+    }
   }
 
   componentDidMount() {
-    axios.get('http://localhost:8000/api/panels/')
-      .then(res => {
-        const moviepanels = res.data;
-        this.setState({ moviepanels });
-      })
-      .catch(e => {
-        console.log(e)
-      })
+      axios.get('http://localhost:8000/api/panels/')
+        .then(res => {
+          const moviepanels = res.data;
+          this.setState({ moviepanels });
+          /* timeout */
+        })
+        .catch(e => {
+          console.log(e)
+        })
   }
 
   render() {
@@ -44,7 +48,7 @@ export default class Header extends Component {
     return (
       <header className="main-header">
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
-          <a className="navbar-brand" href="/">Navbar</a>
+          <a className="navbar-brand" href="/">ToWatch</a>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>

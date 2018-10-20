@@ -1,9 +1,11 @@
 import axios from 'axios';
+import Moment from 'moment'
 import React, {Component} from 'react';
 
 import './Movies.sass';
 
 const DefaultThumb = require('../../img/default-thumb.png')
+
 
 export default class Header extends Component {
   state = {
@@ -53,7 +55,8 @@ export default class Header extends Component {
               <p className="card-text">{movie.description}</p>
             </div>
             <div className="card-footer">
-              <small className="text-muted">Published at {movie.published_at}</small>
+              <small className="text-muted float-left">Published at: </small>
+              <small className="text-muted float-right">{Moment(movie.published_at).format('d MMM HH:mm')}</small>
               {/*<small className="text-muted">Updated at {movie.modified}</small>*/}
             </div>
           </div>
