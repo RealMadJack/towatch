@@ -1,9 +1,46 @@
+*::-webkit-input-placeholder
+  color: #666
+  opacity: 1
+
+*:-moz-placeholder
+  color: #666
+  opacity: 1
+
+*::-moz-placeholder
+  color: #666
+  opacity: 1
+
+*:-ms-input-placeholder
+  color: #666
+  opacity: 1
+
+body input:focus:required:invalid,
+body textarea:focus:required:invalid
+  color: #666
+body input:required:valid,
+body textarea:required:valid
+  color: #666
+
+/* ::selection */
+
+*
+  margin: 0
+  padding: 0
+
+*, *:before, *:after
+  box-sizing: border-box
+
+
 body
   margin: 0
   padding: 0
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif
   -webkit-font-smoothing: antialiased
   -moz-osx-font-smoothing: grayscale
+  box-sizing: border-box
+
+li, a
+  transition: all .2s ease-in-out
 
 code
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace
