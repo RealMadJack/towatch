@@ -22,15 +22,20 @@ export default class Header extends Component {
 
   render() {
     const moviepanels_list = this.state.moviepanels.map((moviepanel) => {
+      const moviepanel_url = `/${moviepanel.slug}/`
+      const moviegenres = moviepanel.moviegenres.map((moviegenre) => {
+        const moviegenre_url = `/${moviegenre.moviepanel.name}/${moviegenre.slug}/`
+        return(
+          <a className="dropdown-item" href={moviegenre_url} key={moviegenre.id}>{moviegenre.name}</a>
+        );
+      })
       return (
         <li className="nav-item dropdown" key={moviepanel.id}>
-          <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a className="nav-link dropdown-toggle" href={moviepanel_url} id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {moviepanel.name}
           </a>
           <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            {moviepanel.moviegenres.map((moviegenre) =>
-              <a className="dropdown-item" href="#" key={moviegenre.id}>{moviegenre.name}</a>
-            )}
+            {moviegenres}
           </div>
         </li>
       );
@@ -39,17 +44,17 @@ export default class Header extends Component {
     return (
       <header className="main-header">
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
-          <a className="navbar-brand" href="#">Navbar</a>
+          <a className="navbar-brand" href="/">Navbar</a>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarNavDropdown">
             <ul className="navbar-nav">
               <li className="nav-item active">
-                <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
+                <a className="nav-link" href="/">Home <span className="sr-only">(current)</span></a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">Features</a>
+                <a className="nav-link" href="/">Features</a>
               </li>
               {moviepanels_list}
             </ul>
