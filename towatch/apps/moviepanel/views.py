@@ -4,14 +4,19 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from .models import MoviePanel, MovieGenre, Movie
-from .serializers import MoviePanelSerializer, MovieGenreSerializer, MovieSerializer
+from .serializers import MoviePanelSerializer, MoviePanelListSerializer, MovieGenreSerializer, MovieSerializer
 
 
 class MoviePanelViewSet(viewsets.ReadOnlyModelViewSet):
     """Movie panel viewset"""
-    queryset = MoviePanel.objects.prefetch_related('moviegenres')
+    queryset = MoviePanel.objects.prefetch_related('moviegenres', 'movies__moviegenre__moviepanel')
     serializer_class = MoviePanelSerializer
     lookup_field = 'slug'
+
+    def list(self, request):
+        queryset = MoviePanel.objects.prefetch_related('moviegenres')
+        serializer = MoviePanelListSerializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 class MovieGenreViewSet(viewsets.ReadOnlyModelViewSet):

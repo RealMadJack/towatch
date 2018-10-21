@@ -3,7 +3,7 @@ from .models import MoviePanel, MovieGenre, Movie
 
 
 class MoviePanelCleanSerializer(serializers.ModelSerializer):
-    url = serializers.HyperlinkedIdentityField(view_name='moviepanel:moviepanel-detail', lookup_field='slug')
+    # url = serializers.HyperlinkedIdentityField(view_name='moviepanel:moviepanel-detail', lookup_field='slug')
 
     class Meta:
         model = MoviePanel
@@ -12,7 +12,7 @@ class MoviePanelCleanSerializer(serializers.ModelSerializer):
 
 class MovieGenreCleanSerializer(serializers.ModelSerializer):
     moviepanel = MoviePanelCleanSerializer()
-    url = serializers.HyperlinkedIdentityField(view_name='moviepanel:moviegenre-detail', lookup_field='slug')
+    # url = serializers.HyperlinkedIdentityField(view_name='moviepanel:moviegenre-detail', lookup_field='slug')
 
     class Meta:
         model = MovieGenre
@@ -22,7 +22,7 @@ class MovieGenreCleanSerializer(serializers.ModelSerializer):
 class MovieCleanSerializer(serializers.ModelSerializer):
     moviepanel = MoviePanelCleanSerializer()
     moviegenre = MovieGenreCleanSerializer(many=True)
-    url = serializers.HyperlinkedIdentityField(view_name='moviepanel:movie-detail')
+    # url = serializers.HyperlinkedIdentityField(view_name='moviepanel:movie-detail')
 
     class Meta:
         model = Movie
@@ -31,7 +31,18 @@ class MovieCleanSerializer(serializers.ModelSerializer):
 
 class MoviePanelSerializer(serializers.ModelSerializer):
     moviegenres = MovieGenreCleanSerializer(many=True)
-    url = serializers.HyperlinkedIdentityField(view_name='moviepanel:moviepanel-detail', lookup_field='slug')
+    movies = MovieCleanSerializer(many=True)
+    # url = serializers.HyperlinkedIdentityField(view_name='moviepanel:moviepanel-detail', lookup_field='slug')
+
+    class Meta:
+        model = MoviePanel
+        fields = '__all__'
+        lookup_field = 'slug'
+
+
+class MoviePanelListSerializer(serializers.ModelSerializer):
+    moviegenres = MovieGenreCleanSerializer(many=True)
+    # url = serializers.HyperlinkedIdentityField(view_name='moviepanel:moviepanel-detail', lookup_field='slug')
 
     class Meta:
         model = MoviePanel
@@ -42,7 +53,7 @@ class MoviePanelSerializer(serializers.ModelSerializer):
 class MovieGenreSerializer(serializers.ModelSerializer):
     moviepanel = MoviePanelCleanSerializer()
     movies = MovieCleanSerializer(many=True)
-    url = serializers.HyperlinkedIdentityField(view_name='moviepanel:moviegenre-detail', lookup_field='slug')
+    # url = serializers.HyperlinkedIdentityField(view_name='moviepanel:moviegenre-detail', lookup_field='slug')
 
     class Meta:
         model = MovieGenre
@@ -52,7 +63,7 @@ class MovieGenreSerializer(serializers.ModelSerializer):
 class MovieSerializer(serializers.ModelSerializer):
     moviepanel = MoviePanelCleanSerializer()
     moviegenre = MovieGenreCleanSerializer(many=True)
-    url = serializers.HyperlinkedIdentityField(view_name='moviepanel:movie-detail')
+    # url = serializers.HyperlinkedIdentityField(view_name='moviepanel:movie-detail')
 
     class Meta:
         model = Movie
