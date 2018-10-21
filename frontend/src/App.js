@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Link, Switch, Redirect } from 'react-ro
 import Header from './components/header/Header'
 import Movies from './components/movies/Movies'
 import MoviePanel from './components/moviepanel/MoviePanel'
+import MovieGenre from './components/moviegenre/MovieGenre'
 import Page404 from './components/404/Page404'
 
 
@@ -20,7 +21,8 @@ class App extends Component {
           <Header />
           <Switch>
             <Route exact path="/" component={Movies} />
-            <Route path="/:moviepanel/" component={MoviePanel} />
+            <Route exact path="/:moviepanel/" component={MoviePanel} />
+            <Route exact path="/:moviepanel/:moviegenre/" component={MovieGenre} />
             <Route path="*" component={Page404} status={404} />
           </Switch>
         </div>
