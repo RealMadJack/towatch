@@ -31,7 +31,6 @@ class MovieCleanSerializer(serializers.ModelSerializer):
 
 class MoviePanelSerializer(serializers.ModelSerializer):
     moviegenres = MovieGenreCleanSerializer(many=True)
-    movies = MovieCleanSerializer(many=True)
     url = serializers.HyperlinkedIdentityField(view_name='moviepanel:moviepanel-detail', lookup_field='slug')
 
     class Meta:
