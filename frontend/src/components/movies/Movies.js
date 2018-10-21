@@ -16,7 +16,7 @@ export default class Header extends Component {
     axios.get('http://localhost:8000/api/movies/')
       .then((res) => {
         console.log(res.data)
-        const movies = res.data
+        const movies = res.data;
         this.setState({ movies })
       })
       .catch((e) => {
@@ -25,21 +25,22 @@ export default class Header extends Component {
   }
 
   render () {
+    const col_style = {
+      'padding': '0 12px',
+    };
     const movies_list = this.state.movies.map((movie) => {
-      const col_style = {
-        'padding': '0 12px',
-      };
       const moviepanel_url = `/${movie.moviepanel.slug}/`;
-      const movie_url = `/${movie.moviepanel.slug}/${movie.id}/`
+      const movie_url = `/${movie.moviepanel.slug}/${movie.id}/`;
       const moviegenre_slice = movie.moviegenre.slice(0, 4);
       const moviegenres = moviegenre_slice.map((moviegenre) => {
-        const moviegenre_url = `/${moviegenre.moviepanel.name}/${moviegenre.slug}/`
+        const moviegenre_url = `/${moviegenre.moviepanel.slug}/${moviegenre.slug}/`;
         return (
           <a className="card-body__moviegenres--moviegenre" href={moviegenre_url} key={moviegenre.id}>
             <span>{moviegenre.name}</span>
           </a>
         );
-      })
+      });
+
       return (
         <div className="col-md-3" style={col_style} key={movie.id}>
           <div className="card" href={movie_url}> {/* Todo card <a> */}
@@ -56,7 +57,9 @@ export default class Header extends Component {
             </div>
             <div className="card-footer">
               <small className="text-muted float-left">Published at: </small>
-              <small className="text-muted float-right">{Moment(movie.published_at).format('d MMM HH:mm')}</small>
+              <small className="text-muted float-right">
+                {Moment(movie.published_at).format('d MMM HH:mm')}
+              </small>
               {/*<small className="text-muted">Updated at {movie.modified}</small>*/}
             </div>
           </div>

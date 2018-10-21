@@ -20,6 +20,7 @@ class MovieGenreCleanSerializer(serializers.ModelSerializer):
 
 
 class MovieCleanSerializer(serializers.ModelSerializer):
+    moviepanel = MoviePanelCleanSerializer()
     moviegenre = MovieGenreCleanSerializer(many=True)
     url = serializers.HyperlinkedIdentityField(view_name='moviepanel:movie-detail')
 

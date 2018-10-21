@@ -20,7 +20,7 @@ class App extends Component {
           <Header />
           <Switch>
             <Route exact path="/" component={Movies} />
-            <Route path="/movies/" component={MoviePanel} />
+            <Route path="/:moviepanel/" component={MoviePanel} />
             <Route path="*" component={Page404} status={404} />
           </Switch>
         </div>
