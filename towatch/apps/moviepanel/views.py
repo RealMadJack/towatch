@@ -9,21 +9,22 @@ from .serializers import MoviePanelSerializer, MovieGenreSerializer, MovieSerial
 
 class MoviePanelViewSet(viewsets.ReadOnlyModelViewSet):
     """Movie panel viewset"""
-    queryset = MoviePanel.objects.prefetch_related('moviegenres', 'movies', 'movies__moviegenre')
+    queryset = MoviePanel.objects.prefetch_related('moviegenres', 'movies__moviegenre__moviepanel')
     serializer_class = MoviePanelSerializer
     lookup_field = 'slug'
 
 
 class MovieGenreViewSet(viewsets.ReadOnlyModelViewSet):
     """Movie genre viewset"""
-    queryset = MovieGenre.objects.select_related('moviepanel').prefetch_related('movies__moviegenre')
+    queryset = MovieGenre.objects.select_related('moviepanel').prefetch_related(
+        'movies__moviegenre__moviepanel', 'movies__moviepanel')
     serializer_class = MovieGenreSerializer
     lookup_field = 'slug'
 
 
 class MovieViewSet(viewsets.ReadOnlyModelViewSet):
     """Movie viewset"""
-    queryset = Movie.objects.select_related('moviepanel').prefetch_related('moviegenre')
+    queryset = Movie.objects.select_related('moviepanel').prefetch_related('moviegenre', 'moviegenre__moviepanel')
     serializer_class = MovieSerializer
 
 
