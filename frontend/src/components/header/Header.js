@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, {Component} from 'react';
 
+import Page404 from './../404/Page404'
 import './Header.sass';
 
 
@@ -13,15 +14,15 @@ export default class Header extends Component {
   }
 
   componentDidMount() {
-      axios.get('http://localhost:8000/api/panels/')
-        .then(res => {
-          const moviepanels = res.data;
-          this.setState({ moviepanels });
-          /* timeout */
-        })
-        .catch(e => {
-          console.log(e)
-        })
+    axios.get('http://localhost:8000/api/panels/')
+      .then(res => {
+        const moviepanels = res.data;
+        this.setState({ moviepanels });
+        /* timeout */
+      })
+      .catch((e) => {
+        console.log(e) // if error status code...
+      })
   }
 
   render() {

@@ -2,6 +2,7 @@ import axios from 'axios';
 import Moment from 'moment';
 import React, {Component} from 'react';
 
+import Page404 from './../404/Page404'
 import './MoviePanel.sass';
 
 const DefaultThumb = require('../../img/default-thumb.png')
@@ -24,7 +25,8 @@ export default class MoviePanel extends Component {
         this.setState({ moviepanel });
       })
       .catch((e) => {
-        console.log(e)
+        console.log(e) // if error status code...
+        return <Page404 />
       })
   }
 

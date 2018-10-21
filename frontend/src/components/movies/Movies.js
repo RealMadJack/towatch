@@ -2,6 +2,7 @@ import axios from 'axios';
 import Moment from 'moment'
 import React, {Component} from 'react';
 
+import Page404 from './../404/Page404'
 import './Movies.sass';
 
 const DefaultThumb = require('../../img/default-thumb.png')
@@ -20,7 +21,7 @@ export default class Header extends Component {
         this.setState({ movies })
       })
       .catch((e) => {
-        console.log(e)
+        console.log(e) // if error status code...
       })
   }
 
