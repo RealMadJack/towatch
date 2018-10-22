@@ -46,7 +46,7 @@ class MovieGenre(TimeStampedModel):
         verbose_name_plural = _('Movie Genres')
 
     def __str__(self):
-        return self.name
+        return f'{self.name} : {self.moviepanel}'
 
     def get_absolute_url(self):
         return reverse('moviepanel:genre', kwargs={
