@@ -23,7 +23,6 @@ export default class Header extends Component {
         /* timeout */
       })
       .catch((e) => {
-
         if (e.response) {
           this.setState({
             error: {

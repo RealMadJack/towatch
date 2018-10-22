@@ -25,7 +25,6 @@ export default class Header extends Component {
         this.setState({ movies })
       })
       .catch((e) => {
-
         if (e.response) {
           this.setState({
             error: {

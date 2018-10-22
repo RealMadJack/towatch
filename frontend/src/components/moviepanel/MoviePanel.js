@@ -29,7 +29,6 @@ export default class MoviePanel extends Component {
         this.setState({ moviepanel });
       })
       .catch((e) => {
-
         if (e.response) {
           this.setState({
             error: {

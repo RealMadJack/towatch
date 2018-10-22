@@ -9,9 +9,9 @@ const DefaultThumb = require('../../img/default-thumb.png')
 
 export default class MovieGenre extends Component {
   state = {
-    moviepanel: {
+    moviegenre: {
       movies: [],
-      moviegenres: [],
+      moviepanel: {},
     },
     error: {
       msg: '',
@@ -24,11 +24,26 @@ export default class MovieGenre extends Component {
     axios.get(`http://localhost:8000/api/genres/${request.moviegenre}`)
       .then((res) => {
         console.log(res.data);
-        const moviepanel = res.data;
-        this.setState({ moviepanel });
+        const moviegenre = res.data;
+
+        if (moviegenre.moviepanel.slug === request.moviepanel) {
+          this.setState({
+            moviegenre: moviegenre,
+            error: {
+              status: 200
+            },
+          });
+        } else {
+          this.setState({
+            error: {
+              msg: 'Incorrect moviepanel',
+              status: 404,
+            }
+          });
+        }
+
       })
       .catch((e) => {
-
         if (e.response) {
           this.setState({
             error: {
@@ -57,16 +72,22 @@ export default class MovieGenre extends Component {
   }
 
   render() {
+    // check if not status
     if (this.state.error.status === 404) {
       return(
         <Page404 />
       )
+    } else if (this.state.error.status === 200) {
+      return(
+        <div>
+          genre is working
+        </div>
+      );
+    } else {
+      return(
+        <div className="preloader"></div>
+      );
     }
 
-    return(
-      <div>
-        genre is working
-      </div>
-    );
   }
 }

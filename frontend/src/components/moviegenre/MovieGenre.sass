@@ -1,55 +1,16 @@
 .card-deck
-	.card
-		position: relative
-		margin: 12px 0
-		&__moviepanel
-			position: absolute
-			top: 0
-			left: 0
-			background-color: #31246E
-			font-size: 1.2em
-			color: white
-			padding: 6px 17px
-			span
-				position: relative
-				top: -2px
-			&:hover, &:focus, &:active
-				text-decoration: none
-				outline: none
-				background-color: #006A94
-				color: white
-		.card-img-top
-			width: 100%
-			height: auto
-			object-fit: fill
-			max-width: 100%
-			max-height: 260px
-	.card-body
-		&__moviegenres
-			margin-bottom: 10px
-			&--moviegenre
-				display: inline-block
-				position: relative
-				color: white
-				background-color: #251B53
-				padding: 1px 8px
-				margin-right: 4px
-				margin-bottom: 4px
-				border-radius: 6px
-				text-decoration: none
-				&:last-of-type
-					margin-right: 0
-				span
-					position: relative
-					top: -1px
-					font-size: 0.8em
-					margin: 0
-					padding: 0
-				&:hover, &:focus, &:active
-					text-decoration: none
-					outline: none
-					background-color: #006A94
-					color: white
-	.card-body, .card-footer
-		padding: 10px
-
+  .card
+    &__moviepanel.moviegenre
+      background-color: #31246E
+      color: white
+      &:hover, &:focus, &:active
+        background-color: #006A94
+        color: white
+  .card-body
+    &__moviegenres.moviegenre
+      &--moviegenre
+        color: white
+        background-color: #251B53
+        &:hover, &:focus, &:active
+          background-color: #006A94
+          color: white
