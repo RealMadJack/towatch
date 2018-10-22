@@ -7,7 +7,7 @@ import Page404 from './../404/Page404'
 import './MoviePanel.sass';
 
 const DefaultThumb = require('../../img/default-thumb.png')
-
+const timeout = 100
 
 export default class MoviePanel extends Component {
   state = {
@@ -23,43 +23,45 @@ export default class MoviePanel extends Component {
 
   componentDidMount() {
     const request = this.props.match.params;
-    axios.get(`http://localhost:8000/api/panels/${request.moviepanel}`)
-      .then((res) => {
-        console.log(res.data);
-        const moviepanel = res.data;
-        this.setState({
-          moviepanel: moviepanel,
-          error: {
-            status: 200,
-          }
-        });
-      })
-      .catch((e) => {
-        if (e.response) {
+    setTimeout(() => {
+      axios.get(`http://localhost:8000/api/panels/${request.moviepanel}`)
+        .then((res) => {
+          console.log(res.data);
+          const moviepanel = res.data;
           this.setState({
+            moviepanel: moviepanel,
             error: {
-              msg: e,
-              status: e.response.status
+              status: 200,
             }
           });
-          // The request was made and the server responded with a status code
-          // that falls out of the range of 2xx
-          // console.log(error.response.data);
-          // console.log(error.response.status);
-          // console.log(error.response.headers);
-        } else if (e.request) {
-          // The request was made but no response was received
-          // `error.request` is an instance of XMLHttpRequest in the
-          // browser and an instance of
-          // http.ClientRequest in node.js
-          console.log(e.request);
-        } else {
-          // Something happened in setting up the request that triggered an Error
-          console.log('Error', e.message);
-        }
-        console.log(e.config);
+        })
+        .catch((e) => {
+          if (e.response) {
+            this.setState({
+              error: {
+                msg: e,
+                status: e.response.status
+              }
+            });
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            // console.log(error.response.data);
+            // console.log(error.response.status);
+            // console.log(error.response.headers);
+          } else if (e.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the
+            // browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(e.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log('Error', e.message);
+          }
+          console.log(e.config);
 
-      })
+        })
+    }, timeout)
   }
 
   render() {
