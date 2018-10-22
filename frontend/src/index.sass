@@ -58,6 +58,7 @@ code
       font-size: 1.2em
       color: white
       padding: 6px 17px
+      z-index: 2
       span
         position: relative
         top: -2px
@@ -66,6 +67,21 @@ code
         outline: none
         background-color: #006A94
         color: white
+    &__movie-link
+      position: relative
+      &::before
+        transition: all .2s ease-in-out
+        content: ''
+        position: absolute
+        top: 0
+        left: 0
+        width: 100%
+        height: 100%
+        z-index: 1
+        background-color: transparent
+      &:hover, &:focus
+        &::before
+          background-color: rgba(0, 106, 148, .5)
     .card-img-top
       width: 100%
       height: auto

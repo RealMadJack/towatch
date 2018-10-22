@@ -90,7 +90,7 @@ export default class Header extends Component {
             <a className="card__moviepanel" href={moviepanel_url}>
               <span>{movie.moviepanel.name}</span>
             </a>
-            <a href={movie_url}>
+            <a className="card__movie-link" href={movie_url}>
               <img className="card-img-top" src={movie.poster_url ? movie.poster_url : DefaultThumb} alt={movie.name} />
             </a>
             <div className="card-body">
