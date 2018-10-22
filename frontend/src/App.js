@@ -22,8 +22,8 @@ class App extends Component {
           <Header />
           <Switch>
             <Route exact path="/" component={Movies} />
-            <Route exact path="/:moviepanel" component={MoviePanel} />
             <Route exact path="/category/:moviegenre" component={MovieGenre} />
+            <Route exact path="/:moviepanel" component={MoviePanel} />
             <Route exact path="/:moviepanel/:movie" component={Movie} />
             <Route component={Page404} status={404} />
           </Switch>
