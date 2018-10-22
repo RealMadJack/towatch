@@ -31,6 +31,7 @@ class MovieViewSet(viewsets.ReadOnlyModelViewSet):
     """Movie viewset"""
     queryset = Movie.objects.select_related('moviepanel').prefetch_related('moviegenre', 'moviegenre__moviepanel')
     serializer_class = MovieSerializer
+    lookup_field = 'slug'
 
 
 class MoviePanelView(APIView):

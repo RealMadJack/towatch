@@ -106,6 +106,9 @@ class Movie(TimeStampedModel):
         })
 
     def save(self, *args, **kwargs):
+        """
+        TODO: if moviegenre did not match with moviepanel = abort
+        """
         if not self.slug or self.name != self.tracker.previous('name'):
             self.slug = get_unique_slug(Movie, self.name)
         return super().save(*args, **kwargs)

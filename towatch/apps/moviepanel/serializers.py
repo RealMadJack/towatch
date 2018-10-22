@@ -37,7 +37,6 @@ class MoviePanelSerializer(serializers.ModelSerializer):
     class Meta:
         model = MoviePanel
         fields = '__all__'
-        lookup_field = 'slug'
 
 
 class MoviePanelListSerializer(serializers.ModelSerializer):
@@ -47,7 +46,6 @@ class MoviePanelListSerializer(serializers.ModelSerializer):
     class Meta:
         model = MoviePanel
         fields = '__all__'
-        lookup_field = 'slug'
 
 
 class MovieGenreSerializer(serializers.ModelSerializer):
