@@ -23,28 +23,18 @@ export default class MovieGenre extends Component {
 
   componentDidMount() {
     const request = this.props.match.params;
+
     setTimeout(() => {
       axios.get(`http://localhost:8000/api/genres/${request.moviegenre}`)
         .then((res) => {
           console.log(res.data);
           const moviegenre = res.data;
-
-          if (moviegenre.moviepanel.slug === request.moviepanel) {
-            this.setState({
-              moviegenre: moviegenre,
-              error: {
-                status: 200
-              },
-            });
-          } else {
-            this.setState({
-              error: {
-                msg: 'Incorrect moviepanel',
-                status: 404,
-              }
-            });
-          }
-
+          this.setState({
+            moviegenre: moviegenre,
+            error: {
+              status: 200
+            },
+          });
         })
         .catch((e) => {
           if (e.response) {
@@ -91,7 +81,7 @@ export default class MovieGenre extends Component {
       const movie_url = `/${movie.moviepanel.slug}/${movie.id}/`;
       const moviegenre_slice = movie.moviegenre.slice(0, 4);
       const moviegenres = moviegenre_slice.map((moviegenre) => {
-        const moviegenre_url = `/${moviegenre.moviepanel.slug}/${moviegenre.slug}/`;
+        const moviegenre_url = `/category/${moviegenre.slug}/`;
         return (
           <a className="card-body__moviegenres--moviegenre" href={moviegenre_url} key={moviegenre.id}>
             <span>{moviegenre.name}</span>

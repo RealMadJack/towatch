@@ -60,7 +60,7 @@ export default class Header extends Component {
     const moviepanels_list = this.state.moviepanels.map((moviepanel) => {
       const moviepanel_url = `/${moviepanel.slug}/`;
       const moviegenres = moviepanel.moviegenres.map((moviegenre) => {
-        const moviegenre_url = `/${moviegenre.moviepanel.slug}/${moviegenre.slug}/`;
+        const moviegenre_url = `/category/${moviegenre.slug}/`;
         return(
           <a className="dropdown-item" href={moviegenre_url} key={moviegenre.id}>
             {moviegenre.name}

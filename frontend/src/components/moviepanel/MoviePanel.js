@@ -80,7 +80,7 @@ export default class MoviePanel extends Component {
       const movie_url = `/${movie.moviepanel.slug}/${movie.id}/`;
       const moviegenre_slice = movie.moviegenre.slice(0, 4);
       const moviegenres = moviegenre_slice.map((moviegenre) => {
-        const moviegenre_url = `/${moviegenre.moviepanel.slug}/${moviegenre.slug}/`;
+        const moviegenre_url = `/category/${moviegenre.slug}/`;
         return (
           <a className="card-body__moviegenres--moviegenre" href={moviegenre_url} key={moviegenre.id}>
             <span>{moviegenre.name}</span>
