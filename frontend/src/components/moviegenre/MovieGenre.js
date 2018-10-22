@@ -3,6 +3,7 @@ import Moment from 'moment';
 import React, {Component} from 'react';
 
 import Page404 from './../404/Page404'
+import Preloader from './../preloader/Preloader'
 import './MovieGenre.sass';
 
 const DefaultThumb = require('../../img/default-thumb.png')
@@ -85,7 +86,7 @@ export default class MovieGenre extends Component {
       );
     } else {
       return(
-        <div className="preloader"></div>
+        <Preloader />
       );
     }
 
