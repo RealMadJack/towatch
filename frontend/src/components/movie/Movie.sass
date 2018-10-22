@@ -1,0 +1,60 @@
+
+
+.movie
+	width: 100%
+	&__title
+		width: 100%
+		margin-bottom: 30px
+		display: flex
+		justify-content: space-between
+		align-items: center
+		&--name
+			h1
+				margin-bottom: 0
+		&--rank
+	&__description
+		display: flex
+		p
+			margin-bottom: 0
+		&--poster
+			flex: 1
+			margin-right: 12px
+			margin-bottom: 12px
+			img
+				max-width: 360px
+				max-height: 460px
+				width: 100%
+				height: auto
+				object-fit: fill
+		&--info
+			flex: 1
+			margin-bottom: 20px
+			.plot
+				margin-bottom: 20px
+			.moviegenre
+        display: inline-block
+        position: relative
+        color: white
+        background-color: #251B53
+        padding: 0px 8px
+        margin-right: 4px
+        margin-bottom: 4px
+        border-radius: 6px
+        text-decoration: none
+        line-height: 1.6
+        &:last-of-type
+          margin-right: 0
+        span
+          position: relative
+          top: -2px
+          font-size: 0.8em
+          margin: 0
+          padding: 0
+        &:hover, &:focus, &:active
+          text-decoration: none
+          outline: none
+          background-color: #006A94
+          color: white
+			p
+				margin-bottom: 0
+	&__video-player

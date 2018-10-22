@@ -74,8 +74,81 @@ export default class Movie extends Component {
   }
 
   render() {
-    return(
-      <div>movie is working</div>
-    );
+    if (this.state.error.status === 404) {
+      return(
+        <Page404 />
+      )
+    }
+
+    if (this.state.error.status === 200) {
+      const movie = this.state.movie;
+      const moviegenres = movie.moviegenre.map((moviegenre) => {
+        const moviegenre_url = `/category/${moviegenre.slug}/`;
+        return(
+          <a className="moviegenre" href={moviegenre_url} key={moviegenre.id}>
+            <span>{moviegenre.name}</span>
+          </a>
+        );
+      })
+
+      return (
+        <div className="container">
+          <div className="row">
+            <div className="movie">
+              <div className="movie__title">
+                <div className="movie__title--name"><h1>Some kind of god of war movie!</h1></div>
+                <div className="movie__title--rank"><span>*****</span></div>
+              </div>
+              <div className="movie__description">
+                <div className="movie__description--poster">
+                  <img src={movie.poster_url ? movie.poster_url : DefaultThumb} alt={movie.name} />
+                </div>
+                <div className="movie__description--info">
+                  <p className="plot">{movie.description}</p>
+                  <p>Duration: {movie.duration}</p>
+                  <p>Country: {movie.country}</p>
+                  <p>Genres: {moviegenres}</p>
+                  <p>Producer: </p>
+                  <p>Actors: </p>
+                  <p>Release date: {movie.release_date}</p>
+                  <p>Last update: {Moment(movie.modified).format('D MMM HH:mm')}</p>
+                </div>
+              </div>
+              <div className="movie__video-player">
+                <nav>
+                  <div className="nav nav-tabs" id="nav-tab" role="tablist">
+                    <a className="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">
+                      Home
+                    </a>
+                    <a className="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false"
+                      >Profile
+                    </a>
+                    <a className="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">
+                      Contact
+                    </a>
+                  </div>
+                </nav>
+                <div className="tab-content" id="nav-tabContent">
+                  <div className="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                    Content of 1
+                  </div>
+                  <div className="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                    Content of 2
+                  </div>
+                  <div className="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                    Content of 3
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    } else {
+      return(
+        <Preloader />
+      );
+    }
+
   }
 }

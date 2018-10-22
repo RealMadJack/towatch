@@ -72,52 +72,52 @@ export default class MovieGenre extends Component {
       )
     }
 
-    const col_style = {
-      'padding': '0 12px',
-    };
-    const moviegenre = this.state.moviegenre
-    const moviegenre_movies = moviegenre.movies.map((movie) => {
-      const moviepanel_url = `/${movie.moviepanel.slug}/`;
-      const movie_url = `/${movie.moviepanel.slug}/${movie.slug}/`;
-      const moviegenre_slice = movie.moviegenre.slice(0, 4);
-      const moviegenres = moviegenre_slice.map((moviegenre) => {
-        const moviegenre_url = `/category/${moviegenre.slug}/`;
-        return (
-          <a className="card-body__moviegenres--moviegenre" href={moviegenre_url} key={moviegenre.id}>
-            <span>{moviegenre.name}</span>
-          </a>
-        );
-      });
+    if (this.state.error.status === 200) {
+      const col_style = {
+        'padding': '0 12px',
+      };
+      const moviegenre = this.state.moviegenre
+      const moviegenre_movies = moviegenre.movies.map((movie) => {
+        const moviepanel_url = `/${movie.moviepanel.slug}/`;
+        const movie_url = `/${movie.moviepanel.slug}/${movie.slug}/`;
+        const moviegenre_slice = movie.moviegenre.slice(0, 4);
+        const moviegenres = moviegenre_slice.map((moviegenre) => {
+          const moviegenre_url = `/category/${moviegenre.slug}/`;
+          return (
+            <a className="card-body__moviegenres--moviegenre" href={moviegenre_url} key={moviegenre.id}>
+              <span>{moviegenre.name}</span>
+            </a>
+          );
+        });
 
-      return(
-        <div className="col-md-3" style={col_style} key={movie.id}>
-          <div className="card">
-            <a className="card__moviepanel" href={moviepanel_url}>
-              <span>{movie.moviepanel.name}</span>
-            </a>
-            <a className="card__movie-link" href={movie_url}>
-              <img className="card-img-top" src={movie.poster_url ? movie.poster_url : DefaultThumb} alt={movie.name} />
-            </a>
-            <div className="card-body">
-              <div className="card-body__moviegenres">
-                {moviegenres}
+        return(
+          <div className="col-md-3" style={col_style} key={movie.id}>
+            <div className="card">
+              <a className="card__moviepanel" href={moviepanel_url}>
+                <span>{movie.moviepanel.name}</span>
+              </a>
+              <a className="card__movie-link" href={movie_url}>
+                <img className="card-img-top" src={movie.poster_url ? movie.poster_url : DefaultThumb} alt={movie.name} />
+              </a>
+              <div className="card-body">
+                <div className="card-body__moviegenres">
+                  {moviegenres}
+                </div>
+                <h5 className="card-title">{movie.name}</h5>
+                <p className="card-text">{movie.description}</p>
               </div>
-              <h5 className="card-title">{movie.name}</h5>
-              <p className="card-text">{movie.description}</p>
-            </div>
-            <div className="card-footer">
-              <small className="text-muted float-left">Published at: </small>
-              <small className="text-muted float-right">
-                {Moment(movie.published_at).format('d MMM HH:mm')}
-              </small>
-              {/*<small className="text-muted">Updated at {movie.modified}</small>*/}
+              <div className="card-footer">
+                <small className="text-muted float-left">Published at: </small>
+                <small className="text-muted float-right">
+                  {Moment(movie.published_at).format('D MMM HH:mm')}
+                </small>
+                {/*<small className="text-muted">Updated at {movie.modified}</small>*/}
+              </div>
             </div>
           </div>
-        </div>
-      );
-    })
+        );
+      })
 
-    if (this.state.error.status === 200) {
       return(
         <div className="container">
           <div className="row">
