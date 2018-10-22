@@ -73,12 +73,14 @@ export default class MovieGenre extends Component {
   }
 
   render() {
-    // check if not status
     if (this.state.error.status === 404) {
       return(
         <Page404 />
       )
-    } else if (this.state.error.status === 200) {
+    }
+
+
+    if (this.state.error.status === 200) {
       return(
         <div>
           genre is working

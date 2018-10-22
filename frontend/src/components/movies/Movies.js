@@ -2,6 +2,7 @@ import axios from 'axios';
 import Moment from 'moment'
 import React, {Component} from 'react';
 
+import Preloader from './../preloader/Preloader'
 import Page404 from './../404/Page404'
 import './Movies.sass';
 
@@ -22,7 +23,12 @@ export default class Header extends Component {
       .then((res) => {
         console.log(res.data);
         const movies = res.data;
-        this.setState({ movies })
+        this.setState({
+          movies: movies,
+          error: {
+            status: 200,
+          }
+        });
       })
       .catch((e) => {
         if (e.response) {
@@ -101,14 +107,21 @@ export default class Header extends Component {
       );
     })
 
-    return (
-      <div className="container">
-        <div className="row">
-          <div className="card-deck">
-            {movies_list}
+    if (this.state.error.status === 200) {
+      return (
+        <div className="container">
+          <div className="row">
+            <div className="card-deck">
+              {movies_list}
+            </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return(
+        <Preloader />
+      );
+    }
+
   }
 }

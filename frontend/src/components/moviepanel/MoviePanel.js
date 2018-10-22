@@ -2,6 +2,7 @@ import axios from 'axios';
 import Moment from 'moment';
 import React, {Component} from 'react';
 
+import Preloader from './../preloader/Preloader'
 import Page404 from './../404/Page404'
 import './MoviePanel.sass';
 
@@ -26,7 +27,12 @@ export default class MoviePanel extends Component {
       .then((res) => {
         console.log(res.data);
         const moviepanel = res.data;
-        this.setState({ moviepanel });
+        this.setState({
+          moviepanel: moviepanel,
+          error: {
+            status: 200,
+          }
+        });
       })
       .catch((e) => {
         if (e.response) {
@@ -106,14 +112,21 @@ export default class MoviePanel extends Component {
       );
     })
 
-    return (
-      <div className="container">
-        <div className="row">
-          <div className="card-deck">
-            {moviepanel_movies}
+    if (this.state.error.status === 200) {
+      return (
+        <div className="container">
+          <div className="row">
+            <div className="card-deck">
+              {moviepanel_movies}
+            </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return(
+        <Preloader />
+      );
+    }
+
   }
 }
