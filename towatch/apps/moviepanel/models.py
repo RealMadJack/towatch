@@ -60,6 +60,10 @@ class MovieGenre(TimeStampedModel):
         return super().save(*args, **kwargs)
 
 
+# class IMDB(TimeStampedModel):
+#     pass
+
+
 class Movie(TimeStampedModel):
     moviepanel = models.ForeignKey(
         MoviePanel,
