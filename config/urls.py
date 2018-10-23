@@ -19,6 +19,8 @@ urlpatterns = [
     # render react build template
     path('', TemplateView.as_view(template_name='index.html')),
     path('<slug>/', TemplateView.as_view(template_name='index.html')),
+    path('category/<slug>/', TemplateView.as_view(template_name='index.html')),
+    path('<slug>/<pk>/', TemplateView.as_view(template_name='index.html')),
 ] + static(
     settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
 )
