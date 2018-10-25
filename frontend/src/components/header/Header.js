@@ -96,7 +96,7 @@ export default class Header extends Component {
               </li>
               {moviepanels_list}
             </ul>
-            <ul class="navbar-nav my-2 my-lg-0">
+            <ul className="navbar-nav my-2 my-lg-0">
               <li className="nav-item">
                 <a className="nav-link" href="/signin">Sign In</a>
               </li>

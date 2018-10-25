@@ -6,13 +6,72 @@ import './SignUp.sass';
 
 
 export default class SignUp extends Component {
-  state = {}
+  state = {
+    name: '',
+    email: '',
+    password: '',
+    password1: '',
+  };
 
-  componentDidMount() {}
+  handleChange = e => {
+    console.log(e.target.name, e.target.value)
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+    console.log(e);
+  };
 
   render() {
     return(
-      <div>SignUp is working</div>
+      <div className="container">
+        <div className="row">
+          <h1 className="col-12">Sign Up:</h1>
+          <form className="sign-form" onSubmit={this.handleSubmit}>
+            <div className="form-field">
+              <label htmlFor="validateAccountName">Account name</label>
+              <input type="text"
+                     name="name"
+                     className="form-control is-valid"
+                     id="validateAccountName"
+                     onChange={this.handleChange}
+                     placeholder="Account name" required />
+              <div className="invalid-feedback">Please provide valid account name</div>
+            </div>
+            <div className="form-field">
+              <label htmlFor="validateEmail">Email</label>
+              <input type="email"
+                     name="email"
+                     className="form-control is-valid"
+                     id="validateEmail"
+                     onChange={this.handleChange}
+                     placeholder="email" required />
+              <div className="invalid-feedback">Please provide valid email</div>
+            </div>
+            <div className="form-field">
+              <label htmlFor="validatePassword">Password</label>
+              <input type="text"
+                     name="password"
+                     className="form-control is-invalid"
+                     if="validatePassword"
+                     onChange={this.handleChange}
+                     placeholder="Password" required />
+              <div className="invalid-feedback">Please provide valid password</div>
+            </div>
+            <div className="form-field">
+              <label htmlFor="validatePassword1">Repeat Password</label>
+              <input type="text"
+                     name="password1"
+                     className="form-control"
+                     if="validatePassword1"
+                     onChange={this.handleChange}
+                     placeholder="Password" required />
+              <div className="invalid-feedback">Please provide valid password</div>
+            </div>
+            <button className="btn btn-primary" type="submit">Submit form</button>
+          </form>
+        </div>
+      </div>
     );
   }
 }
