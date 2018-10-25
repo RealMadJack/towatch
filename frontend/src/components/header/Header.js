@@ -87,7 +87,7 @@ export default class Header extends Component {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul className="navbar-nav">
+            <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
               <li className="nav-item active">
                 <a className="nav-link" href="/">Home <span className="sr-only">(current)</span></a>
               </li>
@@ -95,6 +95,14 @@ export default class Header extends Component {
                 <a className="nav-link" href="/">Features</a>
               </li>
               {moviepanels_list}
+            </ul>
+            <ul class="navbar-nav my-2 my-lg-0">
+              <li className="nav-item">
+                <a className="nav-link" href="/signin">Sign In</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="/signup">Sign Up</a>
+              </li>
             </ul>
           </div>
         </nav>
