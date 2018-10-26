@@ -13,6 +13,7 @@ export default class SignIn extends Component {
       msg: '',
       status: null,
     },
+    endpoint: 'http://localhost:8000/api/token/',
   };
 
   handleChange = e => {
@@ -24,8 +25,12 @@ export default class SignIn extends Component {
   handleSubmit = e => {
     e.preventDefault();
     console.log(this.state);
-    axios.post(`http://localhost:8000/api/token/`, {
-      username: this.state.name, password: this.state.password})
+    const user = {
+      name: this.state.name,
+      password: this.state.password,
+    }
+
+    axios.post(this.state.endpoint, {username: user.name, password: user.password})
       .then((res) => {
         console.log(res)
       })
@@ -37,7 +42,6 @@ export default class SignIn extends Component {
               status: e.response.status
             }
           });
-          console.log(this.state)
           // The request was made and the server responded with a status code
           // that falls out of the range of 2xx
           // console.log(error.response.data);

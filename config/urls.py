@@ -4,11 +4,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import TemplateView
 from django.views import defaults as default_views
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
-    TokenVerifyView,
-)
+from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
 
 urlpatterns = [
     # Django Admin, use {% url 'admin:index' %}
@@ -20,9 +16,9 @@ urlpatterns = [
     # API
     path('api/', include('towatch.apps.moviepanel.urls')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
+    path('api/token/', obtain_jwt_token),
+    path('api/token/refresh/', refresh_jwt_token),
+    path('api/token/verify/', verify_jwt_token),
 
     # render react build template
     path('', TemplateView.as_view(template_name='index.html')),
