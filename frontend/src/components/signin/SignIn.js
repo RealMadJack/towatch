@@ -9,23 +9,52 @@ export default class SignIn extends Component {
   state = {
     name: '',
     password: '',
+    error: {
+      msg: '',
+      status: null,
+    },
   };
 
   handleChange = e => {
-    if (e.target.name === 'name') {
-      this.setState({
-        name: e.target.value,
-      });
-    } else if (e.target.name === 'password') {
-      this.setState({
-        password: e.target.value,
-      });
-    }
+    this.setState({
+        [e.target.name]: e.target.value,
+    });
   };
 
   handleSubmit = e => {
     e.preventDefault();
     console.log(this.state);
+    axios.post(`http://localhost:8000/api/token/`, {
+      username: this.state.name, password: this.state.password})
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((e) => {
+        if (e.response) {
+          this.setState({
+            error: {
+              msg: e,
+              status: e.response.status
+            }
+          });
+          console.log(this.state)
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          // console.log(error.response.data);
+          // console.log(error.response.status);
+          // console.log(error.response.headers);
+        } else if (e.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the
+          // browser and an instance of
+          // http.ClientRequest in node.js
+          console.log(e.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log('Error', e.message);
+        }
+        console.log(e.config);
+      })
   };
 
   render() {
@@ -46,7 +75,7 @@ export default class SignIn extends Component {
             </div>
             <div className="form-field">
               <label htmlFor="validatePassword">Password</label>
-              <input type="text"
+              <input type="password"
                      name="password"
                      className="form-control is-invalid"
                      id="validatePassword"

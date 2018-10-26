@@ -50,7 +50,7 @@ export default class SignUp extends Component {
             </div>
             <div className="form-field">
               <label htmlFor="validatePassword">Password</label>
-              <input type="text"
+              <input type="password"
                      name="password"
                      className="form-control is-invalid"
                      id="validatePassword"
@@ -60,7 +60,7 @@ export default class SignUp extends Component {
             </div>
             <div className="form-field">
               <label htmlFor="validatePassword1">Repeat Password</label>
-              <input type="text"
+              <input type="password"
                      name="password1"
                      className="form-control"
                      id="validatePassword1"
