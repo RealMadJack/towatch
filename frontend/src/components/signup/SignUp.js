@@ -53,7 +53,7 @@ export default class SignUp extends Component {
               <input type="text"
                      name="password"
                      className="form-control is-invalid"
-                     if="validatePassword"
+                     id="validatePassword"
                      onChange={this.handleChange}
                      placeholder="Password" required />
               <div className="invalid-feedback">Please provide valid password</div>
@@ -63,7 +63,7 @@ export default class SignUp extends Component {
               <input type="text"
                      name="password1"
                      className="form-control"
-                     if="validatePassword1"
+                     id="validatePassword1"
                      onChange={this.handleChange}
                      placeholder="Password" required />
               <div className="invalid-feedback">Please provide valid password</div>

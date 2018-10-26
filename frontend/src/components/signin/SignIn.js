@@ -12,12 +12,20 @@ export default class SignIn extends Component {
   };
 
   handleChange = e => {
-    console.log(e.target.name, e.target.value)
+    if (e.target.name === 'name') {
+      this.setState({
+        name: e.target.value,
+      });
+    } else if (e.target.name === 'password') {
+      this.setState({
+        password: e.target.value,
+      });
+    }
   };
 
   handleSubmit = e => {
     e.preventDefault();
-    console.log(e);
+    console.log(this.state);
   };
 
   render() {
@@ -41,7 +49,7 @@ export default class SignIn extends Component {
               <input type="text"
                      name="password"
                      className="form-control is-invalid"
-                     if="validatePassword"
+                     id="validatePassword"
                      onChange={this.handleChange}
                      placeholder="Password" required />
               <div className="invalid-feedback">Please provide valid password</div>
