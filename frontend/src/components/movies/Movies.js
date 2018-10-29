@@ -11,13 +11,16 @@ const timeout = 100;
 
 
 export default class Header extends Component {
-  state = {
-    movies: [],
-    error: {
-      msg: '',
-      status: null,
+  constructor(props) {
+    super(props);
+    this.state = {
+      movies: [],
+      error: {
+        msg: '',
+        status: null,
+      }
     }
-  }
+  };
 
   componentDidMount() {
     setTimeout(() => {

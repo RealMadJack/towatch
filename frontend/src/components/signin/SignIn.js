@@ -6,14 +6,17 @@ import './SignIn.sass';
 
 
 export default class SignIn extends Component {
-  state = {
-    name: '',
-    password: '',
-    error: {
-      msg: '',
-      status: null,
-    },
-    endpoint: 'http://localhost:8000/api/token/',
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: '',
+      password: '',
+      error: {
+        msg: '',
+        status: null,
+      },
+      endpoint: 'http://localhost:8000/api/token/',
+    };
   };
 
   handleChange = e => {

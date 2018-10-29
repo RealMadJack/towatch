@@ -6,11 +6,14 @@ import './SignUp.sass';
 
 
 export default class SignUp extends Component {
-  state = {
-    name: '',
-    email: '',
-    password: '',
-    password1: '',
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: '',
+      email: '',
+      password: '',
+      password1: '',
+    };
   };
 
   handleChange = e => {

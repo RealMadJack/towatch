@@ -6,13 +6,16 @@ import './Header.sass';
 
 
 export default class Header extends Component {
-  state = {
-    moviepanels: [],
-    error: {
-      msg: '',
-      status: null,
+  constructor(props) {
+    super(props);
+    this.state = {
+      moviepanels: [],
+      error: {
+        msg: '',
+        status: null,
+      }
     }
-  }
+  };
 
   componentDidMount() {
     axios.get('http://localhost:8000/api/panels/')

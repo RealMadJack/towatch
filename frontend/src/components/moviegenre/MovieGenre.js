@@ -10,16 +10,19 @@ const DefaultThumb = require('../../img/default-thumb.png');
 const timeout = 100;
 
 export default class MovieGenre extends Component {
-  state = {
-    moviegenre: {
-      movies: [],
-      moviepanel: {},
-    },
-    error: {
-      msg: '',
-      status: null,
+  constructor(props) {
+    super(props);
+    this.state = {
+      moviegenre: {
+        movies: [],
+        moviepanel: {},
+      },
+      error: {
+        msg: '',
+        status: null,
+      }
     }
-  }
+  };
 
   componentDidMount() {
     const request = this.props.match.params;
