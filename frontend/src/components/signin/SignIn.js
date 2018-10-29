@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, {Component} from 'react';
 
-import {csrftoken_str} from './../csrf/csrftoken';
+import CSRFToken, {csrftoken_str} from './../csrf/csrftoken';
 import Page404 from './../404/Page404';
 import './SignIn.sass';
 
@@ -36,8 +36,9 @@ export default class SignIn extends Component {
       password: this.state.password,
     }
 
-    axios.defaults.xsrfCookieName = 'csrftoken';
-    axios.defaults.xsrfHeaderName = 'X-CSRFToken';
+    // axios.defaults.xsrfCookieName = 'csrftoken';
+    // axios.defaults.xsrfHeaderName = 'X-CSRFToken';
+    // axios.defaults.headers.common['HTTP_X_CSRFTOKEN'] = csrftoken_str;
     axios.post(this.state.endpoint, {username: user.name, password: user.password})
       .then((res) => {
         console.log(res)
@@ -75,6 +76,7 @@ export default class SignIn extends Component {
         <div className="row">
           <h1 className="col-12">Sign In:</h1>
           <form className="sign-form" onSubmit={this.handleSubmit}>
+            <CSRFToken />
             <div className="form-field">
               <label htmlFor="validateAccountName">Account name</label>
               <input type="text"
