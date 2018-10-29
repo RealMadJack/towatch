@@ -17,6 +17,8 @@ export default class SignIn extends Component {
       },
       endpoint: 'http://localhost:8000/api/token/',
     };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   };
 
   handleChange = e => {

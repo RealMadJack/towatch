@@ -13,7 +13,14 @@ export default class SignUp extends Component {
       email: '',
       password: '',
       password1: '',
+      error: {
+        msg: '',
+        status: null,
+      },
+      endpoint: 'http://localhost:8000/api/token/',
     };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   };
 
   handleChange = e => {
