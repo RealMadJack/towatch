@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, {Component} from 'react';
 
+import {csrftoken_str} from './../csrf/csrftoken';
 import Page404 from './../404/Page404';
 import './SignIn.sass';
 
@@ -35,6 +36,8 @@ export default class SignIn extends Component {
       password: this.state.password,
     }
 
+    axios.defaults.xsrfCookieName = 'csrftoken';
+    axios.defaults.xsrfHeaderName = 'X-CSRFToken';
     axios.post(this.state.endpoint, {username: user.name, password: user.password})
       .then((res) => {
         console.log(res)

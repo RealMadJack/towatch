@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, {Component} from 'react';
 
+import {csrftoken_str} from './../csrf/csrftoken';
 import Page404 from './../404/Page404';
 import './SignUp.sass';
 
