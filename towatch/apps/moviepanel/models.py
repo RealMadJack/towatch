@@ -86,6 +86,7 @@ class Movie(TimeStampedModel):
     published_at = MonitorField(monitor='status', when=['visible'])
     trailer = models.URLField(_('Trailer'), blank=True, default='', max_length=200)
     tracker = FieldTracker()
+    is_scraped = models.BooleanField(_('Is scraped'), default=False)
     # producer = models.CharField()
     # directors = models.ManyToManyField(Person, through='Director')
     # actors = models.ForeignKey()
