@@ -2,7 +2,7 @@ from django.utils.text import slugify
 
 
 def get_unique_slug(cls, name):
-    """TODO: russian translation slugify"""
+    """TODO: other unicode(ru) slugify"""
 
     slug = slugify(name)
     unique_slug = slug
