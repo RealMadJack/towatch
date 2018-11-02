@@ -1,20 +1,30 @@
+import sys
+import os
+import environ
+sys.path.append(os.path.join(environ.Path(__file__) - 2))
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.local")
+import django
+django.setup()
+
 import logging
 import inspect
 import mechanicalsoup
-import os
 import random
-import sys
 import time
 import threading
 
 from datetime import datetime
 
-from .models import Movie
+from towatch.apps.moviepanel.models import Movie
 
 
+# http://www.omdbapi.com/
 class IMDBScraper:
     """
     IMDB search-scrap movie rank and general info
+
+    On model save if not is_scraped => run
+
     query movies => filter movies without info => create queue => add movies to queue
     => search imbd movie by the title => if found => visit first result uri => scrap data
                                       => if not => log result (in prod db table)
@@ -29,7 +39,8 @@ class IMDBScraper:
         """
         if movie has imdb True, don't search
         """
-        pass
+        movies = Movie.objects.filter(is_scraped=False)
+        return movies
 
     def create_movie_queue(self):
         pass
@@ -41,7 +52,7 @@ class IMDBScraper:
         """
         Queue, threading cycle
         """
-        filtered_movies = self.get_db_movies()
+        filtered_movies = self.get_filter_db_movies()
         print(filtered_movies)
 
         # cycle trough que and search movie
