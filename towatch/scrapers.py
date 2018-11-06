@@ -79,8 +79,8 @@ class IMDBScraper:
         logging.info(f'Calling {inspect.stack()[0][3]} module')
 
         movie = Movie.objects.get(pk=current_movie.id)
-        # print(imdb_movie['video clips'])
-
+        actors = imdb_movie['cast'][:5]
+        print([actor['name'] for actor in actors])
         # 'actors': 'cast',
         # 'directed by': 'director',
         # 'created by': 'creator',
@@ -89,6 +89,7 @@ class IMDBScraper:
         # 'seasons': 'number of seasons',
         # 'language': 'languages',
         # 'videoclips': 'video clips',
+        # movie.actors = imdb_movie['actors']
         movie.country = imdb_movie['country']
         movie.description = imdb_movie.get('plot outline')
         movie.duration = imdb_movie['runtime'][0]
