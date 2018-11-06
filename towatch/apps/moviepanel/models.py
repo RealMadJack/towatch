@@ -76,7 +76,7 @@ class Movie(TimeStampedModel):
     name = models.CharField(_('Name'), blank=False, default='', max_length=255)
     slug = models.SlugField(default='', max_length=255, unique=True)
     country = models.CharField(_('Country'), blank=True, default='', max_length=255)
-    description = models.TextField(_('Description'), blank=False, default='', max_length=512)
+    description = models.TextField(_('Description'), blank=False, default='', max_length=1024)
     duration = models.PositiveIntegerField(_('Duration'), blank=True, default=0)
     poster = models.ImageField(_('Poster'), blank=True, null=True, upload_to='posters')
     poster_url = models.URLField(_('Poster URL'), blank=True, default='', max_length=200)

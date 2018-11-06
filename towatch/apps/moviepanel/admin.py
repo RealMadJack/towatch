@@ -26,7 +26,7 @@ class MovieAdmin(admin.ModelAdmin):
     model = Movie
     readonly_fields = ('slug', )
     filter_horizontal = ('moviegenre', )
-    list_display = ('name', 'get_moviepanel', 'created', 'modified', )
+    list_display = ('name', 'get_moviepanel', 'created', 'modified', 'status', 'is_scraped', )
 
     def get_moviepanel(self, obj):
         return obj.moviepanel.name

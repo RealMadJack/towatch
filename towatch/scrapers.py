@@ -76,19 +76,16 @@ class IMDBScraper:
         logging.info(f'Calling {inspect.stack()[0][3]} module')
 
         movie = Movie.objects.get(pk=current_movie.id)
-        print(imdb_movie.get('plot outline'))
+        # print(imdb_movie['actors'])
 
         # 'actors': 'cast',
         # 'directed by': 'director',
         # 'created by': 'creator',
-        # 'genre': 'genres',
-        # 'runtime': 'runtimes',
-        # 'writing credits': 'writer',
         # 'produced by': 'producer',
+        # 'genre': 'genres',
         # 'seasons': 'number of seasons',
         # 'language': 'languages',
         # 'videoclips': 'video clips',
-        # 'photographs': 'photo sites',
         movie.country = imdb_movie['country'][0]
         movie.description = imdb_movie.get('plot outline')
         movie.duration = imdb_movie['runtime'][0]
@@ -105,6 +102,7 @@ class IMDBScraper:
         filtered_movies = self.get_filter_db_movies()
 
         for movie in filtered_movies[:1]:
+            logging.info(f'Movie: {movie}')
             imdb_search_list = self.search_imdb_movie(movie)
             imdb_movie = self.get_validate_search_list_movie(imdb_search_list, movie)
 
