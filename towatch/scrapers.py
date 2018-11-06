@@ -41,7 +41,7 @@ class IMDBScraper:
         self.imdb = IMDb()
 
     def get_filter_db_movies(self):
-        logging.info(f'- Calling {inspect.stack()[0][3]} module')
+        logging.info(f'Calling {inspect.stack()[0][3]} module')
         movies = Movie.objects.filter(is_scraped=False)
         return movies
 
@@ -53,27 +53,34 @@ class IMDBScraper:
         return result
 
     def get_validate_search_list_movie(self, search_list, current_movie):
-        logging.info(f'- Calling {inspect.stack()[0][3]} module')
+        logging.info(f'Calling {inspect.stack()[0][3]} module')
 
-        first_movie = self.imdb.get_movie(search_list[0].movieID)
-        print(f'Current movie date: {current_movie.release_date}')
+        # print(f'Current movie date: {current_movie.release_date}')
         # print(first_movie['year'])
         # print(first_movie['long imdb canonical title'])
 
-        if current_movie.release_date:
-            count = 0
-            while count <= 3:
-                imdb_movie = self.imdb.get_movie(search_list[count].movieID)
-                if current_movie.release_date != imdb_movie['year']:
-                    print(f'incorrect: {imdb_movie["long imdb canonical title"]}')
-                    count += 1
-                elif current_movie.release_date == imdb_movie['year']:
-                    print(f'Correct: {imdb_movie["long imdb canonical title"]}')
-                    return imdb_movie
+        # if current_movie.release_date:
+        #     count = 0
+        #     while count <= 3:
+        #         imdb_movie = self.imdb.get_movie(search_list[count].movieID)
+        #         if current_movie.release_date != imdb_movie['year']:
+        #             print(f'Incorrect: {imdb_movie["long imdb canonical title"]}')
+        #             count += 1
+        #         elif current_movie.release_date == imdb_movie['year']:
+        #             print(f'Correct: {imdb_movie["long imdb canonical title"]}')
+        #             return imdb_movie
+        first_movie = self.imdb.get_movie(search_list[0].movieID)
         return first_movie
 
-    def substitute_db_movie_info(self, imdb_movie):
-        pass
+    def substitute_db_movie_info(self, imdb_movie, current_movie):
+        movie = Movie.objects.get(pk=current_movie.id)
+        print(imdb_movie['country'])
+        print(imdb_movie['rating'])
+
+        movie.country = imdb_movie['country'][0]
+        movie.description = imdb_movie['plot']
+        # movie.is_scraped = True
+        movie.save()
 
     def run(self):
         """
@@ -86,7 +93,7 @@ class IMDBScraper:
             imdb_movie = self.get_validate_search_list_movie(imdb_search_list, movie)
 
             try:
-                self.substitute_db_movie_info(imdb_movie)
+                self.substitute_db_movie_info(imdb_movie, movie)
             except Exception as e:
                 logging.exception(e)
 
