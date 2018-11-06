@@ -73,13 +73,29 @@ class IMDBScraper:
         return first_movie
 
     def substitute_db_movie_info(self, imdb_movie, current_movie):
-        movie = Movie.objects.get(pk=current_movie.id)
-        print(imdb_movie['country'])
-        print(imdb_movie['rating'])
+        logging.info(f'Calling {inspect.stack()[0][3]} module')
 
+        movie = Movie.objects.get(pk=current_movie.id)
+        print(imdb_movie.get('plot outline'))
+
+        # 'actors': 'cast',
+        # 'directed by': 'director',
+        # 'created by': 'creator',
+        # 'genre': 'genres',
+        # 'runtime': 'runtimes',
+        # 'writing credits': 'writer',
+        # 'produced by': 'producer',
+        # 'seasons': 'number of seasons',
+        # 'language': 'languages',
+        # 'videoclips': 'video clips',
+        # 'photographs': 'photo sites',
         movie.country = imdb_movie['country'][0]
-        movie.description = imdb_movie['plot']
+        movie.description = imdb_movie.get('plot outline')
+        movie.duration = imdb_movie['runtime'][0]
+        movie.poster_url = imdb_movie['full-size cover url']
         # movie.is_scraped = True
+        if not movie.release_date:
+            movie.release_date = imdb_movie['year']
         movie.save()
 
     def run(self):
