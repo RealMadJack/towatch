@@ -74,29 +74,25 @@ class IMDBScraper:
 
     def substitute_db_movie_info(self, imdb_movie, current_movie):
         """
-        TODO: rating, genres, director, creator, producer, seasons, trailer, images, pg
+        TODO: genres, trailer, images
         """
         logging.info(f'Calling {inspect.stack()[0][3]} module')
 
-        movie = Movie.objects.get(pk=current_movie.id)
-        actors = imdb_movie['cast'][:5]
-        print([actor['name'] for actor in actors])
-        # 'actors': 'cast',
-        # 'directed by': 'director',
-        # 'created by': 'creator',
-        # 'produced by': 'producer',
+        # print(imdb_movie['seasons'])
         # 'genre': 'genres',
-        # 'seasons': 'number of seasons',
-        # 'language': 'languages',
         # 'videoclips': 'video clips',
-        # movie.actors = imdb_movie['actors']
-        movie.country = imdb_movie['country']
+        movie = Movie.objects.get(pk=current_movie.id)
+
+        movie.actors = imdb_movie.get('cast')[:5]
+        movie.country = imdb_movie.get('country')
         movie.description = imdb_movie.get('plot outline')
-        movie.duration = imdb_movie['runtime'][0]
-        movie.poster_url = imdb_movie['full-size cover url']
+        movie.duration = imdb_movie.get('runtime')[0]
+        movie.original_language = imdb_movie.get('language')
+        movie.poster_url = imdb_movie.get('full-size cover url')
+        movie.rating = imdb_movie.get('rating')
+        movie.seasons = imdb_movie.get('seasons')
+        movie.release_date = imdb_movie.get('year')
         # movie.is_scraped = True
-        if not movie.release_date:
-            movie.release_date = imdb_movie['year']
         movie.save()
 
     def run(self):
