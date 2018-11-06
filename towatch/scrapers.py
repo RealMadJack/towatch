@@ -19,7 +19,11 @@ from imdb import IMDb
 from towatch.apps.moviepanel.models import Movie
 
 
-# http://www.omdbapi.com/
+# Logging restrictions
+# logging.getLogger("imdbpy").setLevel(logging.WARNING)
+logging.getLogger("imdb.parser.http.piculet").setLevel(logging.WARNING)
+
+
 class IMDBScraper:
     """
     IMDB search-scrap movie rank and general info
@@ -32,9 +36,9 @@ class IMDBScraper:
     => validate scraped data => save Movie object
     """
 
-    def __init__(self, target_url='imdb.com'):
+    def __init__(self):
         logging.info(f'Creating instance: {self.__class__.__name__}')
-        self.target_url = target_url
+        self.imdb = IMDb()
 
     def get_filter_db_movies(self):
         logging.info(f'- Calling {inspect.stack()[0][3]} module')
@@ -45,9 +49,17 @@ class IMDBScraper:
         pass
 
     def search_imdb_movie(self, movie):
-        imdb = IMDb()
-        result = imdb.search_movie(movie.name)
+        result = self.imdb.search_movie(movie.name)
         return result
+
+    def get_validate_search_list_movie(self, search_list):
+        logging.info(f'- Calling {inspect.stack()[0][3]} module')
+
+        first_movie = self.imdb.get_movie(search_list[0].movieID)
+        print(first_movie['year'])
+
+    def substitute_db_movie_info(self, imdb_movie):
+        pass
 
     def run(self):
         """
@@ -55,8 +67,14 @@ class IMDBScraper:
         """
         filtered_movies = self.get_filter_db_movies()
 
-        for movie in filtered_movies[:2]:
+        for movie in filtered_movies[:1]:
             imdb_search_list = self.search_imdb_movie(movie)
+            imdb_movie = self.get_validate_search_list_movie(imdb_search_list)
+
+            try:
+                self.substitute_db_movie_info(imdb_movie)
+            except Exception as e:
+                logging.exception(e)
 
 
 def main():
