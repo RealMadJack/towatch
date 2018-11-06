@@ -59,24 +59,27 @@ class IMDBScraper:
         # print(first_movie['year'])
         # print(first_movie['long imdb canonical title'])
 
-        # if current_movie.release_date:
-        #     count = 0
-        #     while count <= 3:
-        #         imdb_movie = self.imdb.get_movie(search_list[count].movieID)
-        #         if current_movie.release_date != imdb_movie['year']:
-        #             print(f'Incorrect: {imdb_movie["long imdb canonical title"]}')
-        #             count += 1
-        #         elif current_movie.release_date == imdb_movie['year']:
-        #             print(f'Correct: {imdb_movie["long imdb canonical title"]}')
-        #             return imdb_movie
+        if current_movie.release_date:
+            count = 0
+            while count <= 5:
+                imdb_movie = self.imdb.get_movie(search_list[count].movieID)
+                if current_movie.release_date != imdb_movie['year']:
+                    logging.info(f'Incorrect: {imdb_movie["long imdb canonical title"]}')
+                    count += 1
+                elif current_movie.release_date == imdb_movie['year']:
+                    logging.info(f'Correct: {imdb_movie["long imdb canonical title"]}')
+                    return imdb_movie
         first_movie = self.imdb.get_movie(search_list[0].movieID)
         return first_movie
 
     def substitute_db_movie_info(self, imdb_movie, current_movie):
+        """
+        TODO: rating, genres, director, creator, producer, seasons, trailer, images, pg
+        """
         logging.info(f'Calling {inspect.stack()[0][3]} module')
 
         movie = Movie.objects.get(pk=current_movie.id)
-        # print(imdb_movie['actors'])
+        # print(imdb_movie['video clips'])
 
         # 'actors': 'cast',
         # 'directed by': 'director',
@@ -86,7 +89,7 @@ class IMDBScraper:
         # 'seasons': 'number of seasons',
         # 'language': 'languages',
         # 'videoclips': 'video clips',
-        movie.country = imdb_movie['country'][0]
+        movie.country = imdb_movie['country']
         movie.description = imdb_movie.get('plot outline')
         movie.duration = imdb_movie['runtime'][0]
         movie.poster_url = imdb_movie['full-size cover url']
