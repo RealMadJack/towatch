@@ -20,7 +20,7 @@ from towatch.apps.moviepanel.models import Movie
 
 
 # Logging restrictions
-# logging.getLogger("imdbpy").setLevel(logging.WARNING)
+logging.getLogger("imdbpy").setLevel(logging.WARNING)
 logging.getLogger("imdb.parser.http.piculet").setLevel(logging.WARNING)
 
 
@@ -52,11 +52,25 @@ class IMDBScraper:
         result = self.imdb.search_movie(movie.name)
         return result
 
-    def get_validate_search_list_movie(self, search_list):
+    def get_validate_search_list_movie(self, search_list, current_movie):
         logging.info(f'- Calling {inspect.stack()[0][3]} module')
 
         first_movie = self.imdb.get_movie(search_list[0].movieID)
-        print(first_movie['year'])
+        print(f'Current movie date: {current_movie.release_date}')
+        # print(first_movie['year'])
+        # print(first_movie['long imdb canonical title'])
+
+        if current_movie.release_date:
+            count = 0
+            while count <= 3:
+                imdb_movie = self.imdb.get_movie(search_list[count].movieID)
+                if current_movie.release_date != imdb_movie['year']:
+                    print(f'incorrect: {imdb_movie["long imdb canonical title"]}')
+                    count += 1
+                elif current_movie.release_date == imdb_movie['year']:
+                    print(f'Correct: {imdb_movie["long imdb canonical title"]}')
+                    return imdb_movie
+        return first_movie
 
     def substitute_db_movie_info(self, imdb_movie):
         pass
@@ -69,7 +83,7 @@ class IMDBScraper:
 
         for movie in filtered_movies[:1]:
             imdb_search_list = self.search_imdb_movie(movie)
-            imdb_movie = self.get_validate_search_list_movie(imdb_search_list)
+            imdb_movie = self.get_validate_search_list_movie(imdb_search_list, movie)
 
             try:
                 self.substitute_db_movie_info(imdb_movie)
