@@ -1,20 +1,21 @@
 import sys
 import os
-import environ
-sys.path.append(os.path.join(environ.Path(__file__) - 2))
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.local")
 import django
+
+sys.path.append(os.path.join(os.path.abspath(os.path.dirname(__name__))))
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.local")
 django.setup()
+
 
 import logging
 import inspect
+import imdb
 import mechanicalsoup
 import random
 import time
 import threading
 
 from datetime import datetime
-
 from towatch.apps.moviepanel.models import Movie
 
 
@@ -36,28 +37,27 @@ class IMDBScraper:
         self.target_url = target_url
 
     def get_filter_db_movies(self):
-        """
-        if movie has imdb True, don't search
-        """
+        logging.info(f'- Calling {inspect.stack()[0][3]} module')
         movies = Movie.objects.filter(is_scraped=False)
         return movies
 
     def create_movie_queue(self):
         pass
 
-    def search_imdb_movie(self):
+    def search_imdb_movie(self, movie):
         pass
 
     def run(self):
         """
         Queue, threading cycle
         """
-        filtered_movies = self.get_filter_db_movies()
-        print(filtered_movies)
-
-        # cycle trough que and search movie
-
         logging.info(f'Starting {self.__class__.__name__}')
+        filtered_movies = self.get_filter_db_movies()
+
+        for movie in filtered_movies[:2]:
+            imdb_movie = self.search_imdb_movie(movie.name)
+            print(imdb_movie)
+
 
 
 def main():
