@@ -1,37 +1,50 @@
 
 
 .movie
-	width: 100%
-	&__title
-		width: 100%
-		margin-bottom: 30px
-		display: flex
-		justify-content: space-between
-		align-items: center
-		&--name
-			h1
-				margin-bottom: 0
-		&--rank
-	&__description
-		display: flex
-		p
-			margin-bottom: 0
-		&--poster
-			max-width: 360px
-			width: 100%
-			margin-right: 12px
-			margin-bottom: 12px
-			img
-				max-height: 460px
-				width: 100%
-				height: auto
-				object-fit: fill
-		&--info
-			flex: 1 1 auto
-			margin-bottom: 20px
-			.plot
-				margin-bottom: 20px
-			.moviegenre
+  width: 100%
+  &__title
+    width: 100%
+    margin-bottom: 30px
+    display: flex
+    justify-content: space-between
+    align-items: center
+    &--name
+      h1
+        margin-bottom: 0
+    &--rating
+      .rating-star
+        position: relative
+        top: -3px
+        width: 25px
+        height: auto
+        margin: 0 10px
+      .rating-string
+        font-size: 20px
+        font-weight: bold
+  &__description
+    display: flex
+    p
+      margin-bottom: 0
+    &--poster
+      max-width: 360px
+      width: 100%
+      margin-right: 12px
+      margin-bottom: 12px
+      img
+        max-height: 460px
+        width: 100%
+        height: auto
+        object-fit: fill
+    &--info
+      flex: 1 1 auto
+      margin-bottom: 20px
+      .plot
+        margin-bottom: 20px
+      .movie-actor
+        margin-right: 10px
+        &:last-of-type
+          margin-right: 0
+      .movie-genre
         display: inline-block
         position: relative
         color: white
@@ -55,6 +68,4 @@
           outline: none
           background-color: #006A94
           color: white
-			p
-				margin-bottom: 0
-	&__video-player
+  &__video-player

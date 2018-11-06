@@ -56,14 +56,16 @@ code
       position: absolute
       top: 0
       left: 0
-      background-color: #31246E
       font-size: 1.2em
       color: white
-      padding: 6px 17px
       z-index: 2
-      span
-        position: relative
-        top: -2px
+      background-color: #31246E
+      padding: 6px 17px
+      .movie-panel
+        display: inline-block
+        span
+          position: relative
+          top: -2px
       &:hover, &:focus, &:active
         text-decoration: none
         outline: none
@@ -89,8 +91,22 @@ code
       height: auto
       object-fit: fill
       max-width: 100%
-      max-height: 260px
+      max-height: 360px
   .card-body
+    .card-title
+      display: flex
+      flex: 1 row
+      justify-content: space-between
+      .movie-rating
+        display: flex
+        .rating-star
+          width: 20px
+          height: 20px
+          margin-right: 4px
+        .rating-string
+          font-size: 18px
+    .card-text
+      font-size: 14px
     &__moviegenres
       margin-bottom: 10px
       &--moviegenre

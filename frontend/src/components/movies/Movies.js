@@ -7,6 +7,7 @@ import Page404 from './../404/Page404';
 import './Movies.sass';
 
 const DefaultThumb = require('../../img/default-thumb.png');
+const RatingStar = require('../../img/rating-star.png');
 const timeout = 100;
 
 
@@ -92,7 +93,9 @@ export default class Header extends Component {
           <div className="col-md-3" style={col_style} key={movie.id}>
             <div className="card">
               <a className="card__moviepanel" href={moviepanel_url}>
-                <span>{movie.moviepanel.name}</span>
+                <div className="movie-panel">
+                  <span>{movie.moviepanel.name}</span>
+                </div>
               </a>
               <a className="card__movie-link" href={movie_url}>
                 <img className="card-img-top" src={movie.poster_url ? movie.poster_url : DefaultThumb} alt={movie.name} />
@@ -101,8 +104,14 @@ export default class Header extends Component {
                 <div className="card-body__moviegenres">
                   {moviegenres}
                 </div>
-                <h5 className="card-title">{movie.name}</h5>
-                <p className="card-text">{movie.description}</p>
+                <h5 className="card-title">
+                  <span>{movie.name}</span>
+                  <div className="movie-rating">
+                    <img className="rating-star" src={RatingStar} alt="rating" />
+                    <span className="rating-string">{movie.rating}</span>
+                  </div>
+                </h5>
+                <p className="card-text">{movie.description.substring(0, 200)}...</p>
               </div>
               <div className="card-footer">
                 <small className="text-muted float-left">Published at: </small>

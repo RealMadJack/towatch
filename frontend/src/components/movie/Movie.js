@@ -7,6 +7,7 @@ import Preloader from './../preloader/Preloader';
 import './Movie.sass';
 
 const DefaultThumb = require('../../img/default-thumb.png');
+const RatingStar = require('../../img/rating-star.png');
 const timeout = 100;
 
 
@@ -88,9 +89,14 @@ export default class Movie extends Component {
       const moviegenres = movie.moviegenre.map((moviegenre) => {
         const moviegenre_url = `/category/${moviegenre.slug}/`;
         return(
-          <a className="moviegenre" href={moviegenre_url} key={moviegenre.id}>
+          <a className="movie-genre" href={moviegenre_url} key={moviegenre.id}>
             <span>{moviegenre.name}</span>
           </a>
+        );
+      })
+      const movieactors = movie.actors.map((actor, index) => {
+        return(
+          <span className="movie-actor" key={index}>{actor}</span>
         );
       })
 
@@ -100,7 +106,11 @@ export default class Movie extends Component {
             <div className="movie">
               <div className="movie__title">
                 <div className="movie__title--name"><h1>{movie.name}</h1></div>
-                <div className="movie__title--rank"><span>*****</span></div>
+                <div className="movie__title--rating">
+                  <span>IMDB</span>
+                  <img className="rating-star" src={RatingStar} alt="rating" />
+                  <span className="rating-string">{movie.rating} / 10</span>
+                </div>
               </div>
               <div className="movie__description">
                 <div className="movie__description--poster">
@@ -108,11 +118,10 @@ export default class Movie extends Component {
                 </div>
                 <div className="movie__description--info">
                   <p className="plot">{movie.description}</p>
-                  <p>Duration: {movie.duration}</p>
+                  <p>Duration: {movie.duration}min</p>
                   <p>Country: {movie.country}</p>
                   <p>Genres: {moviegenres}</p>
-                  <p>Producer: </p>
-                  <p>Actors: </p>
+                  <p>Actors: {movieactors}</p>
                   <p>Release date: {movie.release_date}</p>
                   <p>Last update: {Moment(movie.modified).format('D MMM HH:mm')}</p>
                 </div>

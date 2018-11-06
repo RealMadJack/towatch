@@ -107,7 +107,7 @@ export default class MovieGenre extends Component {
                   {moviegenres}
                 </div>
                 <h5 className="card-title">{movie.name}</h5>
-                <p className="card-text">{movie.description}</p>
+                <p className="card-text">{movie.description.substring(0, 200)}...</p>
               </div>
               <div className="card-footer">
                 <small className="text-muted float-left">Published at: </small>
