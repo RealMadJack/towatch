@@ -90,7 +90,7 @@ class IMDBScraper:
         movie.original_language = imdb_movie.get('language')
         movie.poster_url = imdb_movie.get('full-size cover url')
         movie.rating = imdb_movie.get('rating')
-        movie.seasons = imdb_movie.get('seasons')
+        movie.seasons = imdb_movie.get('seasons', 0)
         movie.release_date = imdb_movie.get('year')
         # movie.is_scraped = True
         movie.save()
@@ -101,7 +101,7 @@ class IMDBScraper:
         """
         filtered_movies = self.get_filter_db_movies()
 
-        for movie in filtered_movies[:1]:
+        for movie in filtered_movies[3:4]:
             logging.info(f'Movie: {movie}')
             imdb_search_list = self.search_imdb_movie(movie)
             imdb_movie = self.get_validate_search_list_movie(imdb_search_list, movie)
