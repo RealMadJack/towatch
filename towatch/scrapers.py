@@ -9,13 +9,13 @@ django.setup()
 
 import logging
 import inspect
-import imdb
 import mechanicalsoup
 import random
 import time
 import threading
 
 from datetime import datetime
+from imdb import IMDb
 from towatch.apps.moviepanel.models import Movie
 
 
@@ -45,19 +45,18 @@ class IMDBScraper:
         pass
 
     def search_imdb_movie(self, movie):
-        pass
+        imdb = IMDb()
+        result = imdb.search_movie(movie.name)
+        return result
 
     def run(self):
         """
         Queue, threading cycle
         """
-        logging.info(f'Starting {self.__class__.__name__}')
         filtered_movies = self.get_filter_db_movies()
 
         for movie in filtered_movies[:2]:
-            imdb_movie = self.search_imdb_movie(movie.name)
-            print(imdb_movie)
-
+            imdb_search_list = self.search_imdb_movie(movie)
 
 
 def main():
