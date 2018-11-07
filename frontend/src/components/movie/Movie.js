@@ -88,7 +88,6 @@ export default class Movie extends Component {
     this.setState({
       player: e,
       player_ready: true,
-      playing: false,
     });
   }
 
@@ -141,8 +140,8 @@ export default class Movie extends Component {
       })
       const yt_id = "axkOqrLtDXo"
       const yt_opts = {
-        height: '390',
-        minWidth: '640',
+        // height: '390',
+        // width: '640',
         playerVars: { // https://developers.google.com/youtube/player_parameters
           autoplay: 1
         }

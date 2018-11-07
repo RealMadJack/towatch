@@ -45,9 +45,6 @@ class IMDBScraper:
         movies = Movie.objects.filter(is_scraped=False)
         return movies
 
-    def create_movie_queue(self):
-        pass
-
     def search_imdb_movie(self, movie):
         result = self.imdb.search_movie(movie.name)
         return result
@@ -112,12 +109,34 @@ class IMDBScraper:
                 logging.exception(e)
 
 
+class YTScraper:
+    def __init__(self):
+        logging.info(f'Creating instance: {self.__class__.__name__}')
+
+    def get_filter_db_movies(self):
+        logging.info(f'Calling {inspect.stack()[0][3]} module')
+
+    def search_yt_trailer(self):
+        logging.info(f'Calling {inspect.stack()[0][3]} module')
+
+    def get_validate_trailer_list(self):
+        logging.info(f'Calling {inspect.stack()[0][3]} module')
+
+    def substitute_db_movie_trailer(self):
+        logging.info(f'Calling {inspect.stack()[0][3]} module')
+
+    def run(self):
+        logging.info(f'Calling {inspect.stack()[0][3]} module')
+
+
 def main():
     logging.basicConfig(level=logging.DEBUG, format='%(name)-24s: %(levelname)-8s %(message)s')
     start = datetime.now()
 
-    imdb_scraper = IMDBScraper()
-    imdb_scraper.run()
+    # imdb_scraper = IMDBScraper()
+    # imdb_scraper.run()
+    yt_scraper = YTScraper()
+    yt_scraper.run()
 
     finish = datetime.now() - start
     logging.info(f'Done in: {finish}')
