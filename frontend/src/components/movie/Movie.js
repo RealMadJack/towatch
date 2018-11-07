@@ -26,8 +26,9 @@ export default class Movie extends Component {
         msg: '',
         status: null,
       },
-      playing: false,
       player: null,
+      player_ready: false,
+      playing: false,
     }
   };
 
@@ -84,22 +85,33 @@ export default class Movie extends Component {
 
   _onReady(e) {
     e.target.pauseVideo();
+    this.setState({
+      player: e,
+      player_ready: true,
+      playing: false,
+    });
   }
 
   _onPlay(e) {
     this.setState({
-      playing: true,
       player: e,
+      playing: true,
     });
   }
 
   _onPause(e) {
     this.setState({
+      player: e,
       playing: false,
     });
   }
 
   onTabChange(e) {
+    if (e.target.id === 'nav-trailer-tab') {
+      this.state.player_ready ? this.state.player.target.playVideo() : setTimeout(() => {
+        this.state.player.target.playVideo()
+      }, 1000)
+    }
     if (this.state.playing && e.target.id !== 'nav-trailer-tab') {
       this.state.player.target.pauseVideo();
     }
@@ -167,24 +179,24 @@ export default class Movie extends Component {
               <div className="movie__video-player">
                 <nav>
                   <div className="nav nav-tabs" id="nav-tab" role="tablist" onClick={this.onTabChange.bind(this)}>
-                    <a className="nav-item nav-link" id="nav-home-tab" data-toggle="tab" href="#nav-home">
+                    <a className="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home">
                       Home
                     </a>
                     <a className="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile">Profile
                     </a>
-                    <a className="nav-item nav-link active" id="nav-trailer-tab" data-toggle="tab" href="#nav-trailer">
+                    <a className="nav-item nav-link" id="nav-trailer-tab" data-toggle="tab" href="#nav-trailer">
                       Trailer
                     </a>
                   </div>
                 </nav>
                 <div className="tab-content" id="nav-tabContent">
-                  <div className="tab-pane fade" id="nav-home" role="tabpanel">
+                  <div className="tab-pane fade show active" id="nav-home" role="tabpanel">
                     Content of 1
                   </div>
                   <div className="tab-pane fade" id="nav-profile" role="tabpanel">
                     Content of 2
                   </div>
-                  <div className="tab-pane fade show active" id="nav-trailer" role="tabpanel">
+                  <div className="tab-pane fade" id="nav-trailer" role="tabpanel">
                     <YouTube
                       videoId={yt_id}
                       id="player"
