@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, {Component} from 'react';
 import Moment from 'moment';
+import YouTube from 'react-youtube';
 
 import Page404 from './../404/Page404';
 import Preloader from './../preloader/Preloader';
@@ -9,11 +10,13 @@ import './Movie.sass';
 const DefaultThumb = require('../../img/default-thumb.png');
 const RatingStar = require('../../img/rating-star.png');
 const timeout = 100;
+let loadYT;
 
 
 export default class Movie extends Component {
   constructor(props) {
     super(props);
+    this.youtubePlayerAnchor = '1cH2cerUpMQ';
     this.state = {
       movie: {
         moviepanel: {},
@@ -77,6 +80,11 @@ export default class Movie extends Component {
     }, timeout)
   }
 
+  _onReady(event) {
+    // access to player in all event handlers via event.target
+    event.target.pauseVideo();
+  }
+
   render() {
     if (this.state.error.status === 404) {
       return(
@@ -99,6 +107,14 @@ export default class Movie extends Component {
           <span className="movie-actor" key={index}>{actor}</span>
         );
       })
+      const yt_id = "axkOqrLtDXo"
+      const yt_opts = {
+        height: '390',
+        width: '640',
+        playerVars: { // https://developers.google.com/youtube/player_parameters
+          autoplay: 0
+        }
+      };
 
       return (
         <div className="container">
@@ -122,6 +138,8 @@ export default class Movie extends Component {
                   <p>Country: {movie.country}</p>
                   <p>Genres: {moviegenres}</p>
                   <p>Actors: {movieactors}</p>
+                  <p>Seasons: {movie.seasons}</p>
+                  <p>Language: {movie.original_language}</p>
                   <p>Release date: {movie.release_date}</p>
                   <p>Last update: {Moment(movie.modified).format('D MMM HH:mm')}</p>
                 </div>
@@ -129,26 +147,29 @@ export default class Movie extends Component {
               <div className="movie__video-player">
                 <nav>
                   <div className="nav nav-tabs" id="nav-tab" role="tablist">
-                    <a className="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home">
+                    <a className="nav-item nav-link" id="nav-home-tab" data-toggle="tab" href="#nav-home">
                       Home
                     </a>
                     <a className="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile">Profile
                     </a>
-                    <a className="nav-item nav-link" id="nav-trailer-tab" data-toggle="tab" href="#nav-trailer">
+                    <a className="nav-item nav-link active" id="nav-trailer-tab" data-toggle="tab" href="#nav-trailer">
                       Trailer
                     </a>
                   </div>
                 </nav>
                 <div className="tab-content" id="nav-tabContent">
-                  <div className="tab-pane fade show active" id="nav-home" role="tabpanel">
+                  <div className="tab-pane fade" id="nav-home" role="tabpanel">
                     Content of 1
                   </div>
                   <div className="tab-pane fade" id="nav-profile" role="tabpanel">
                     Content of 2
                   </div>
-                  <div className="tab-pane fade" id="nav-trailer" role="tabpanel">
-                    Content of 3
-                    {/*<iframe width="560" height="315" src={movie.trailer ? movie.trailer : ''} frameBorder="0" allow="encrypted-media" allowFullScreen></iframe>*/}
+                  <div className="tab-pane fade show active" id="nav-trailer" role="tabpanel">
+                    <YouTube
+                      videoId={yt_id}
+                      opts={yt_opts}
+                      onReady={this._onReady}
+                    />
                   </div>
                 </div>
               </div>
