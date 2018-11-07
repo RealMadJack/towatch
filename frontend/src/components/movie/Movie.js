@@ -25,7 +25,9 @@ export default class Movie extends Component {
       error: {
         msg: '',
         status: null,
-      }
+      },
+      playing: false,
+      player: null,
     }
   };
 
@@ -80,9 +82,27 @@ export default class Movie extends Component {
     }, timeout)
   }
 
-  _onReady(event) {
-    // access to player in all event handlers via event.target
-    event.target.pauseVideo();
+  _onReady(e) {
+    e.target.pauseVideo();
+  }
+
+  _onPlay(e) {
+    this.setState({
+      playing: true,
+      player: e,
+    });
+  }
+
+  _onPause(e) {
+    this.setState({
+      playing: false,
+    });
+  }
+
+  onTabChange(e) {
+    if (this.state.playing && e.target.id !== 'nav-trailer-tab') {
+      this.state.player.target.pauseVideo();
+    }
   }
 
   render() {
@@ -110,9 +130,9 @@ export default class Movie extends Component {
       const yt_id = "axkOqrLtDXo"
       const yt_opts = {
         height: '390',
-        width: '640',
+        minWidth: '640',
         playerVars: { // https://developers.google.com/youtube/player_parameters
-          autoplay: 0
+          autoplay: 1
         }
       };
 
@@ -146,7 +166,7 @@ export default class Movie extends Component {
               </div>
               <div className="movie__video-player">
                 <nav>
-                  <div className="nav nav-tabs" id="nav-tab" role="tablist">
+                  <div className="nav nav-tabs" id="nav-tab" role="tablist" onClick={this.onTabChange.bind(this)}>
                     <a className="nav-item nav-link" id="nav-home-tab" data-toggle="tab" href="#nav-home">
                       Home
                     </a>
@@ -167,8 +187,12 @@ export default class Movie extends Component {
                   <div className="tab-pane fade show active" id="nav-trailer" role="tabpanel">
                     <YouTube
                       videoId={yt_id}
+                      id="player"
+                      ref="player"
                       opts={yt_opts}
-                      onReady={this._onReady}
+                      onReady={this._onReady.bind(this)}
+                      onPlay={this._onPlay.bind(this)}
+                      onPause={this._onPause.bind(this)}
                     />
                   </div>
                 </div>
