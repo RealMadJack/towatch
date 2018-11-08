@@ -161,6 +161,21 @@ class YTScraper:
             self.substitute_db_movie_trailer(yt_search_list, movie)
 
 
+class MovieScraper:
+    def __init__(self):
+        logging.info(f'Creating instance: {self.__class__.__name__}')
+
+
+class SerialScraper:
+    def __init__(self):
+        logging.info(f'Creating instance: {self.__class__.__name__}')
+
+
+class AnimeScraper:
+    def __init__(self):
+        logging.info(f'Creating instance: {self.__class__.__name__}')
+
+
 def main():
     logging.basicConfig(level=logging.DEBUG, format='%(name)-24s: %(levelname)-8s %(message)s')
     start = datetime.now()
