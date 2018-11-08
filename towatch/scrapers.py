@@ -6,14 +6,14 @@ sys.path.append(os.path.join(os.path.abspath(os.path.dirname(__name__))))
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.local")
 django.setup()
 
-
 import logging
 import inspect
-import mechanicalsoup
-import random
+import re
+import requests
 import time
 import threading
 
+from bs4 import BeautifulSoup
 from datetime import datetime
 from imdb import IMDb
 from towatch.apps.moviepanel.models import Movie
@@ -22,6 +22,7 @@ from towatch.apps.moviepanel.models import Movie
 # Logging restrictions
 logging.getLogger("imdbpy").setLevel(logging.WARNING)
 logging.getLogger("imdb.parser.http.piculet").setLevel(logging.WARNING)
+logging.getLogger("chardet.charsetprober").setLevel(logging.WARNING)
 
 
 class IMDBScraper:
@@ -71,13 +72,12 @@ class IMDBScraper:
 
     def substitute_db_movie_info(self, imdb_movie, current_movie):
         """
-        TODO: genres, trailer, images
+        TODO: genres, images
         """
         logging.info(f'Calling {inspect.stack()[0][3]} module')
 
         # print(imdb_movie['seasons'])
         # 'genre': 'genres',
-        # 'videoclips': 'video clips',
         movie = Movie.objects.get(pk=current_movie.id)
 
         movie.actors = imdb_movie.get('cast')[:5]
@@ -94,7 +94,7 @@ class IMDBScraper:
 
     def run(self):
         """
-        Queue, threading cycle
+        TODO: Queue, threading cycle
         """
         filtered_movies = self.get_filter_db_movies()
 
@@ -115,9 +115,17 @@ class YTScraper:
 
     def get_filter_db_movies(self):
         logging.info(f'Calling {inspect.stack()[0][3]} module')
+        movies = Movie.objects.filter(trailer='')
+        return movies
 
-    def search_yt_trailer(self):
+    def search_yt_trailer(self, movie):
         logging.info(f'Calling {inspect.stack()[0][3]} module')
+        yt_query = f'https://www.youtube.com/results?search_query={movie.name}+{movie.release_date}+official+trailer'
+
+        resp = requests.get(yt_query)
+        soup = BeautifulSoup(resp.content, 'html.parser')
+        import pprint
+        pprint.pprint(soup.select('a.yt-uix-tile-link')[:3])
 
     def get_validate_trailer_list(self):
         logging.info(f'Calling {inspect.stack()[0][3]} module')
@@ -127,6 +135,11 @@ class YTScraper:
 
     def run(self):
         logging.info(f'Calling {inspect.stack()[0][3]} module')
+        filtered_movies = self.get_filter_db_movies()
+
+        for movie in filtered_movies[:1]:
+            logging.info(f'Movie: {movie}')
+            yt_search_list = self.search_yt_trailer(movie)
 
 
 def main():
