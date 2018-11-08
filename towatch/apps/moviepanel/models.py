@@ -89,7 +89,7 @@ class Movie(TimeStampedModel):
     STATUS = Choices('invisible', 'visible')
     status = StatusField()
     published_at = MonitorField(monitor='status', when=['visible'])
-    trailer = models.URLField(_('Trailer'), blank=True, default='', max_length=200)
+    yt_trailer_id = ArrayField(models.CharField(max_length=55), blank=True, default=list)
     tracker = FieldTracker()
     is_scraped = models.BooleanField(_('Is scraped'), default=False)
     # producer = models.CharField()

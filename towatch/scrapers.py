@@ -131,24 +131,34 @@ class YTScraper:
 
         for video in search_list:
             if movie.name.lower() and trailer in video['title'].lower():
+                print()
                 print(f"FOUND: {video['title']}")
+                print()
                 videoID = str(video['href'][9:])
                 results.append(videoID)
-        return results if len(results) > 0 else first_videoID
+        print(f'Movie {movie.name}: {results}')
+        return results if len(results) > 0 else results.append(first_videoID)
 
-    def get_validate_trailer_list(self):
+    def validate_yt_search_list(self):
+        """
+        Thorough check for exact movie trailer by different params
+        """
         logging.info(f'Calling {inspect.stack()[0][3]} module')
 
-    def substitute_db_movie_trailer(self):
+    def substitute_db_movie_trailer(self, search_list, current_movie):
         logging.info(f'Calling {inspect.stack()[0][3]} module')
+        movie = Movie.objects.get(pk=current_movie.id)
+        movie.yt_trailer_id = search_list[:3]
+        movie.save()
 
     def run(self):
         logging.info(f'Calling {inspect.stack()[0][3]} module')
         filtered_movies = self.get_filter_db_movies()
 
-        for movie in filtered_movies[:1]:
+        for movie in filtered_movies:
             logging.info(f'Movie: {movie}')
             yt_search_list = self.search_yt_trailer_id(movie)
+            self.substitute_db_movie_trailer(yt_search_list, movie)
 
 
 def main():
