@@ -1,21 +1,21 @@
-import sys
-import os
-import django
-
-sys.path.append(os.path.join(os.path.abspath(os.path.dirname(__name__))))
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.local")
-django.setup()
-
 import logging
 import inspect
 import re
 import requests
 import time
 import threading
+import sys
+import os
+import django
 
 from bs4 import BeautifulSoup
 from datetime import datetime
 from imdb import IMDb
+
+sys.path.append(os.path.join(os.path.abspath(os.path.dirname(__name__))))
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.local")
+django.setup()
+
 from towatch.apps.moviepanel.models import Movie
 
 
@@ -118,14 +118,23 @@ class YTScraper:
         movies = Movie.objects.filter(trailer='')
         return movies
 
-    def search_yt_trailer(self, movie):
+    def search_yt_trailer_id(self, movie):
         logging.info(f'Calling {inspect.stack()[0][3]} module')
-        yt_query = f'https://www.youtube.com/results?search_query={movie.name}+{movie.release_date}+official+trailer'
+        trailer = 'official trailer'
+        yt_query = f'https://www.youtube.com/results?search_query={movie.name}+{movie.release_date}+{trailer}'
 
         resp = requests.get(yt_query)
         soup = BeautifulSoup(resp.content, 'html.parser')
-        import pprint
-        pprint.pprint(soup.select('a.yt-uix-tile-link')[:3])
+        search_list = soup.select('a.yt-uix-tile-link')[:10]
+        first_videoID = str(search_list[0]['href'][9:])
+        results = []
+
+        for video in search_list:
+            if movie.name.lower() and trailer in video['title'].lower():
+                print(f"FOUND: {video['title']}")
+                videoID = str(video['href'][9:])
+                results.append(videoID)
+        return results if len(results) > 0 else first_videoID
 
     def get_validate_trailer_list(self):
         logging.info(f'Calling {inspect.stack()[0][3]} module')
@@ -139,7 +148,7 @@ class YTScraper:
 
         for movie in filtered_movies[:1]:
             logging.info(f'Movie: {movie}')
-            yt_search_list = self.search_yt_trailer(movie)
+            yt_search_list = self.search_yt_trailer_id(movie)
 
 
 def main():
