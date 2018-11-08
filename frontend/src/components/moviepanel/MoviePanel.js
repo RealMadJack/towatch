@@ -105,7 +105,9 @@ export default class MoviePanel extends Component {
                 <div className="card-body__moviegenres">
                   {moviegenres}
                 </div>
-                <h5 className="card-title">{movie.name}</h5>
+                <h5 className="card-title">
+                  <a href={movie_url}>{movie.name}</a>
+                </h5>
                 <p className="card-text">{movie.description.substring(0, 200)}...</p>
               </div>
               <div className="card-footer">

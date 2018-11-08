@@ -50,7 +50,7 @@ code
 #player
   min-width: 320px
   width: 100%
-  // max-width: 640px
+  max-width: 640px
 
 .card-deck
   .card
@@ -101,6 +101,14 @@ code
       display: flex
       flex: 1 row
       justify-content: space-between
+      a
+        color: black
+        text-decoration: none
+        outline: none
+        &:hover, &:focus, &:active
+          text-decoration: none
+          outline: none
+          color: #006A94
       .movie-rating
         display: flex
         .rating-star

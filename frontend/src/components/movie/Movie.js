@@ -138,7 +138,7 @@ export default class Movie extends Component {
           <span className="movie-actor" key={index}>{actor}</span>
         );
       })
-      const yt_id = "axkOqrLtDXo"
+      const yt_id = movie.yt_trailer_id[0]
       const yt_opts = {
         // height: '390',
         // width: '640',

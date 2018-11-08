@@ -146,6 +146,9 @@ class YTScraper:
         logging.info(f'Calling {inspect.stack()[0][3]} module')
 
     def substitute_db_movie_trailer(self, search_list, current_movie):
+        """
+        TODO: is_yt_scraped = False if no results
+        """
         logging.info(f'Calling {inspect.stack()[0][3]} module')
         movie = Movie.objects.get(pk=current_movie.id)
         movie.yt_trailer_id = search_list[:5]

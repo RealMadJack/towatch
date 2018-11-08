@@ -105,7 +105,7 @@ export default class Header extends Component {
                   {moviegenres}
                 </div>
                 <h5 className="card-title">
-                  <span>{movie.name}</span>
+                  <a href={movie_url}>{movie.name}</a>
                   <div className="movie-rating">
                     <img className="rating-star" src={RatingStar} alt="rating" />
                     <span className="rating-string">{movie.rating}</span>
