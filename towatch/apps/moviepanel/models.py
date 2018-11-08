@@ -93,6 +93,7 @@ class Movie(TimeStampedModel):
     yt_trailer_id = ArrayField(models.CharField(max_length=55), blank=True, default=list)
     tracker = FieldTracker()
     is_scraped = models.BooleanField(_('Is scraped'), default=False)
+    is_yt_scraped = models.BooleanField(_('Is YouTube scraped'), default=False)
     # producer = models.CharField()
     # directors = models.ManyToManyField(Person, through='Director')
     # moviegenre = models.ManyToMany()

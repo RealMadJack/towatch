@@ -99,7 +99,6 @@ class IMDBScraper:
         filtered_movies = self.get_filter_db_movies()
 
         for movie in filtered_movies:
-            logging.info(f'Movie: {movie}')
             imdb_search_list = self.search_imdb_movie(movie)
             imdb_movie = self.get_validate_search_list_movie(imdb_search_list, movie)
 
@@ -115,40 +114,42 @@ class YTScraper:
 
     def get_filter_db_movies(self):
         logging.info(f'Calling {inspect.stack()[0][3]} module')
-        movies = Movie.objects.filter(trailer='')
+        movies = Movie.objects.filter(is_yt_scraped=False)
         return movies
 
     def search_yt_trailer_id(self, movie):
         logging.info(f'Calling {inspect.stack()[0][3]} module')
-        trailer = 'official trailer'
+        trailer = 'trailer'
         yt_query = f'https://www.youtube.com/results?search_query={movie.name}+{movie.release_date}+{trailer}'
 
         resp = requests.get(yt_query)
         soup = BeautifulSoup(resp.content, 'html.parser')
         search_list = soup.select('a.yt-uix-tile-link')[:10]
+        search_validators = [movie.name.lower(), trailer.lower()]
         first_videoID = str(search_list[0]['href'][9:])
-        results = []
+        result = []
 
         for video in search_list:
-            if movie.name.lower() and trailer in video['title'].lower():
-                print()
-                print(f"FOUND: {video['title']}")
-                print()
+            if all(x in video['title'].lower() for x in search_validators):
                 videoID = str(video['href'][9:])
-                results.append(videoID)
-        print(f'Movie {movie.name}: {results}')
-        return results if len(results) > 0 else results.append(first_videoID)
+                result.append(videoID)
 
-    def validate_yt_search_list(self):
+        if len(result) == 0:
+            result.append(first_videoID)
+        return result
+
+    def validate_search_list_result(self):
         """
-        Thorough check for exact movie trailer by different params
+        TODO: Thorough search_list validation by results length and different params
+                (year, title, season)
         """
         logging.info(f'Calling {inspect.stack()[0][3]} module')
 
     def substitute_db_movie_trailer(self, search_list, current_movie):
         logging.info(f'Calling {inspect.stack()[0][3]} module')
         movie = Movie.objects.get(pk=current_movie.id)
-        movie.yt_trailer_id = search_list[:3]
+        movie.yt_trailer_id = search_list[:5]
+        movie.is_yt_scraped = True
         movie.save()
 
     def run(self):
@@ -156,7 +157,6 @@ class YTScraper:
         filtered_movies = self.get_filter_db_movies()
 
         for movie in filtered_movies:
-            logging.info(f'Movie: {movie}')
             yt_search_list = self.search_yt_trailer_id(movie)
             self.substitute_db_movie_trailer(yt_search_list, movie)
 
