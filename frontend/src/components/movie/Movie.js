@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, {Component} from 'react';
+import update from 'react-addons-update';
 import Moment from 'moment';
 import YouTube from 'react-youtube';
 
@@ -10,7 +11,6 @@ import './Movie.sass';
 const DefaultThumb = require('../../img/default-thumb.png');
 const RatingStar = require('../../img/rating-star.png');
 const timeout = 100;
-let loadYT;
 
 
 export default class Movie extends Component {
@@ -26,9 +26,7 @@ export default class Movie extends Component {
         msg: '',
         status: null,
       },
-      player: null,
-      player_ready: false,
-      playing: false,
+      yt_player: [],
     }
   };
 
@@ -84,36 +82,62 @@ export default class Movie extends Component {
   }
 
   _onReady(e) {
-    e.target.pauseVideo();
-    this.setState({
-      player: e,
-      player_ready: true,
+    this.setState(prevState => ({
+      yt_player: [
+        ...prevState.yt_player,
+        {
+          player: e,
+          player_ready: true,
+          playing: false,
+          errors: [],
+        }
+      ]
+    }));
+    this.state.yt_player.map((yt_player) => {
+      yt_player.player.target.pauseVideo();
+      return false
     });
   }
 
   _onPlay(e) {
-    this.setState({
-      player: e,
-      playing: true,
+    const target = e.target
+    this.state.yt_player.map((yt_player, index) => {
+      if (target === yt_player.player.target) {
+        console.log(index)
+        console.log(target)
+        console.log(yt_player)
+        this.setState({
+          yt_player: update(
+            this.state.yt_player,
+            {[index]: {
+              playing: {$set: true}
+            }}
+          )
+        });
+      }
+      return false
     });
+    console.log(this.state)
   }
 
   _onPause(e) {
-    this.setState({
-      player: e,
-      playing: false,
-    });
+    // this.setState({
+    //   player: e,
+    //   playing: false,
+    // });
+    // console.log(e.target)
+    // console.log(this.state)
   }
 
   onTabChange(e) {
-    if (e.target.id === 'nav-trailer-tab') {
-      this.state.player_ready ? this.state.player.target.playVideo() : setTimeout(() => {
-        this.state.player.target.playVideo()
-      }, 1000)
-    }
-    if (this.state.playing && e.target.id !== 'nav-trailer-tab') {
-      this.state.player.target.pauseVideo();
-    }
+    // if (e.target.id === 'nav-trailer-tab') {
+    //   this.state.player_ready ? this.state.player.target.playVideo() : setTimeout(() => {
+    //     this.state.player.target.playVideo()
+    //   }, 1000)
+    // }
+    // if (this.state.playing && e.target.id !== 'nav-trailer-tab') {
+    //   this.state.player.target.pauseVideo();
+    // }
   }
 
   render() {
@@ -138,14 +162,29 @@ export default class Movie extends Component {
           <span className="movie-actor" key={index}>{actor}</span>
         );
       })
-      const yt_id = movie.yt_trailer_id[0]
       const yt_opts = {
         // height: '390',
         // width: '640',
         playerVars: { // https://developers.google.com/youtube/player_parameters
-          autoplay: 1
+          autoplay: 0
         }
       };
+      const yt_trailers = movie.yt_trailer_id.slice(0, 2).map((yt_id, index) => {
+        const player_id = "player" + index
+        return(
+          <YouTube
+            videoId={yt_id}
+            className="yt_player"
+            id={player_id}
+            ref={player_id}
+            opts={yt_opts}
+            onReady={this._onReady.bind(this)}
+            onPlay={this._onPlay.bind(this)}
+            onPause={this._onPause.bind(this)}
+            key={index}
+          />
+        );
+      })
 
       return (
         <div className="container">
@@ -170,7 +209,7 @@ export default class Movie extends Component {
                   <p>Genres: {moviegenres}</p>
                   <p>Actors: {movieactors}</p>
                   <p>Seasons: {movie.seasons}</p>
-                  <p>Language: {movie.original_language}</p>
+                  <p>Language: {movie.original_language[0]}</p>
                   <p>Release date: {movie.release_date}</p>
                   <p>Last update: {Moment(movie.modified).format('D MMM HH:mm')}</p>
                 </div>
@@ -178,33 +217,25 @@ export default class Movie extends Component {
               <div className="movie__video-player">
                 <nav>
                   <div className="nav nav-tabs" id="nav-tab" role="tablist" onClick={this.onTabChange.bind(this)}>
-                    <a className="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home">
+                    <a className="nav-item nav-link" id="nav-home-tab" data-toggle="tab" href="#nav-home">
                       Home
                     </a>
                     <a className="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile">Profile
                     </a>
-                    <a className="nav-item nav-link" id="nav-trailer-tab" data-toggle="tab" href="#nav-trailer">
+                    <a className="nav-item nav-link active" id="nav-trailer-tab" data-toggle="tab" href="#nav-trailer">
                       Trailer
                     </a>
                   </div>
                 </nav>
                 <div className="tab-content" id="nav-tabContent">
-                  <div className="tab-pane fade show active" id="nav-home" role="tabpanel">
+                  <div className="tab-pane fade" id="nav-home" role="tabpanel">
                     Content of 1
                   </div>
                   <div className="tab-pane fade" id="nav-profile" role="tabpanel">
                     Content of 2
                   </div>
-                  <div className="tab-pane fade" id="nav-trailer" role="tabpanel">
-                    <YouTube
-                      videoId={yt_id}
-                      id="player"
-                      ref="player"
-                      opts={yt_opts}
-                      onReady={this._onReady.bind(this)}
-                      onPlay={this._onPlay.bind(this)}
-                      onPause={this._onPause.bind(this)}
-                    />
+                  <div className="tab-pane fade show active" id="nav-trailer" role="tabpanel">
+                    {yt_trailers}
                   </div>
                 </div>
               </div>
