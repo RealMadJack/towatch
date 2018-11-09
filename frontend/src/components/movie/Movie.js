@@ -181,17 +181,19 @@ export default class Movie extends Component {
       const yt_trailers = movie.yt_trailer_id.slice(0, 2).map((yt_id, index) => {
         const player_id = "player" + index
         return(
-          <YouTube
-            videoId={yt_id}
-            className="yt_player"
-            id={player_id}
-            ref={player_id}
-            opts={yt_opts}
-            onReady={this._onReady.bind(this)}
-            onPlay={this._onPlay.bind(this)}
-            onPause={this._onPause.bind(this)}
-            key={index}
-          />
+          <div className="col-12 col-lg-6 mb-20">
+            <YouTube
+              videoId={yt_id}
+              className="yt_player"
+              id={player_id}
+              ref={player_id}
+              opts={yt_opts}
+              onReady={this._onReady.bind(this)}
+              onPlay={this._onPlay.bind(this)}
+              onPause={this._onPause.bind(this)}
+              key={index}
+            />
+          </div>
         );
       })
 
@@ -244,7 +246,9 @@ export default class Movie extends Component {
                     Content of 2
                   </div>
                   <div className="tab-pane fade" id="nav-trailer" role="tabpanel">
-                    {yt_trailers}
+                    <div className="row">
+                      {yt_trailers}
+                    </div>
                   </div>
                 </div>
               </div>
