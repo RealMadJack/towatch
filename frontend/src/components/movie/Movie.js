@@ -103,13 +103,9 @@ export default class Movie extends Component {
     const target = e.target
     this.state.yt_player.map((yt_player, index) => {
       if (target === yt_player.player.target) {
-        console.log(index)
-        console.log(target)
-        console.log(yt_player)
         this.setState({
           yt_player: update(
-            this.state.yt_player,
-            {[index]: {
+            this.state.yt_player, {[index]: {
               playing: {$set: true}
             }}
           )
@@ -117,16 +113,22 @@ export default class Movie extends Component {
       }
       return false
     });
-    console.log(this.state)
   }
 
   _onPause(e) {
-    // this.setState({
-    //   player: e,
-    //   playing: false,
-    // });
-    // console.log(e.target)
-    // console.log(this.state)
+    const target = e.target
+    this.state.yt_player.map((yt_player, index) => {
+      if (target === yt_player.player.target) {
+        this.setState({
+          yt_player: update(
+            this.state.yt_player, {[index]: {
+              playing: {$set: false}
+            }}
+          )
+        });
+      }
+      return false
+    });
   }
 
   onTabChange(e) {
@@ -135,9 +137,14 @@ export default class Movie extends Component {
     //     this.state.player.target.playVideo()
     //   }, 1000)
     // }
-    // if (this.state.playing && e.target.id !== 'nav-trailer-tab') {
-    //   this.state.player.target.pauseVideo();
-    // }
+    if (e.target.id !== 'nav-trailer-tab') {
+      this.state.yt_player.map((yt_player, index) => {
+        if (yt_player.playing === true) {
+          yt_player.player.target.pauseVideo();
+        }
+        return false
+      });
+    }
   }
 
   render() {
