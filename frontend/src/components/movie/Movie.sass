@@ -1,4 +1,4 @@
-
+@import "src/vars"
 
 .movie
   width: 100%
@@ -12,6 +12,7 @@
       h1
         margin-bottom: 0
     &--rating
+      white-space: nowrap
       .rating-star
         position: relative
         top: -3px
@@ -23,51 +24,35 @@
         font-weight: bold
   &__description
     display: flex
+    margin-bottom: 20px
     p
       margin-bottom: 0
     &--poster
-      max-width: 360px
+      flex: 1
+      max-width: $img-maxw
       width: 100%
       margin-right: 12px
       margin-bottom: 12px
       img
-        max-height: 460px
         width: 100%
         height: auto
+        max-height: $img-maxh
         object-fit: fill
     &--info
-      flex: 1 1 auto
-      margin-bottom: 20px
+      flex: 1
       .plot
-        margin-bottom: 20px
+        margin-bottom: 15px
+        line-height: 1.5
+        vertical-align: top
       .movie-actor
-        margin-right: 10px
-        &:last-of-type
-          margin-right: 0
-      .movie-genre
-        display: inline-block
-        position: relative
-        color: white
-        background-color: #251B53
-        padding: 0px 8px
-        margin-right: 4px
-        margin-bottom: 4px
-        border-radius: 6px
-        text-decoration: none
-        line-height: 1.6
-        &:last-of-type
-          margin-right: 0
-        span
-          position: relative
-          top: -2px
-          font-size: 0.8em
-          margin: 0
-          padding: 0
+        font-size: 0.9em
         &:hover, &:focus, &:active
-          text-decoration: none
-          outline: none
-          background-color: #006A94
-          color: white
+          background-color: $accent
+      .movie-genre
+        padding: 0px 8px
+        line-height: 1.6
+        span
+          top: -2px
   &__video-player
     margin-bottom: 100px
     .tab-content
@@ -75,3 +60,76 @@
         padding-top: 15px
         text-align: center
         margin: auto
+
+
+
+/* Large Devices, Wide Screens */
+@media only screen and (max-width : 1200px)
+  /**/
+
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width : 992px)
+  $img-maxw: 260px
+  $img-maxh: 360px
+
+  .movie
+    font-size: 0.9em
+    &__title
+      margin-bottom: 25px
+      &--name
+        h1
+          font-size: 30px
+      &--rating
+        .rating-star
+          width: 20px
+          height: auto
+          margin: 0 7px
+        .rating-string
+          font-size: 16px
+    &__description
+      &--poster
+        max-width: $img-maxw
+        img
+          max-height: $img-maxh
+
+/* Small Devices, Tablets */
+@media only screen and (max-width : 768px)
+  $img-maxw: 260px
+  $img-maxh: 360px
+
+  .movie
+    font-size: 0.8em
+    padding: 0 7px
+    &__title
+      margin-bottom: 20px
+      flex-direction: column
+      &--name
+        h1
+          font-size: 28px
+      &--rating
+        .rating-star
+          width: 20px
+          height: auto
+          margin: 0 7px
+        .rating-string
+          font-size: 16px
+    &__description
+      flex-direction: column
+      &--poster
+        margin-right: auto
+        margin-left: auto
+        max-width: $img-maxw
+        img
+          max-height: $img-maxh
+
+
+/* Extra Small Devices, Phones */
+@media only screen and (max-width : 480px)
+  $img-maxw: 260px
+  $img-maxh: 360px
+
+
+/* Custom, iPhone Retina */
+@media only screen and (max-width : 320px)
+  /**/

@@ -1,3 +1,5 @@
+@import "vars"
+
 *::-webkit-input-placeholder
   color: #666
   opacity: 1
@@ -48,9 +50,33 @@ code
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace
 
 .yt_player
-  min-width: 320px
-  width: 100%
-  max-width: 640px
+  width: $yt-player-w
+  max-width: $yt-player-maxw
+  min-width: $yt-player-minw
+
+.round-link-badge
+  display: inline-block
+  position: relative
+  color: $color
+  background-color: $accent
+  padding: 1px 8px
+  margin-right: 4px
+  margin-bottom: 4px
+  border-radius: 6px
+  text-decoration: none
+  &:last-of-type
+    margin-right: 0
+  span
+    position: relative
+    top: -1px
+    font-size: 0.8em
+    margin: 0
+    padding: 0
+  &:hover, &:focus, &:active
+    text-decoration: none
+    outline: none
+    background-color: $accent-hover
+    color: $color
 
 .card-deck
   .card
@@ -61,9 +87,9 @@ code
       top: 0
       left: 0
       font-size: 1.2em
-      color: white
+      color: $color
       z-index: 2
-      background-color: #31246E
+      background-color: $accent
       padding: 6px 17px
       .movie-panel
         display: inline-block
@@ -73,8 +99,8 @@ code
       &:hover, &:focus, &:active
         text-decoration: none
         outline: none
-        background-color: #006A94
-        color: white
+        background-color: $accent-hover
+        color: $color
     &__movie-link
       position: relative
       &::before
@@ -89,7 +115,7 @@ code
         background-color: transparent
       &:hover, &:focus
         &::before
-          background-color: rgba(0, 106, 148, .5)
+          background-color: $accent-hover-rgba
     .card-img-top
       width: 100%
       height: auto
@@ -108,7 +134,7 @@ code
         &:hover, &:focus, &:active
           text-decoration: none
           outline: none
-          color: #006A94
+          color: $accent-hover
       .movie-rating
         display: flex
         .rating-star
@@ -122,28 +148,9 @@ code
     &__moviegenres
       margin-bottom: 10px
       &--moviegenre
-        display: inline-block
-        position: relative
-        color: white
-        background-color: #251B53
-        padding: 1px 8px
-        margin-right: 4px
-        margin-bottom: 4px
-        border-radius: 6px
-        text-decoration: none
-        &:last-of-type
-          margin-right: 0
-        span
-          position: relative
-          top: -1px
-          font-size: 0.8em
-          margin: 0
-          padding: 0
-        &:hover, &:focus, &:active
-          text-decoration: none
-          outline: none
-          background-color: #006A94
-          color: white
   .card-body, .card-footer
     padding: 10px
 
+
+
+@import "media"

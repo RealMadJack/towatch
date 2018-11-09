@@ -159,14 +159,16 @@ export default class Movie extends Component {
       const moviegenres = movie.moviegenre.map((moviegenre) => {
         const moviegenre_url = `/category/${moviegenre.slug}/`;
         return(
-          <a className="movie-genre" href={moviegenre_url} key={moviegenre.id}>
+          <a className="movie-genre round-link-badge" href={moviegenre_url} key={moviegenre.id}>
             <span>{moviegenre.name}</span>
           </a>
         );
       })
       const movieactors = movie.actors.map((actor, index) => {
         return(
-          <span className="movie-actor" key={index}>{actor}</span>
+          <span className="movie-actor round-link-badge" key={index}>
+            <span>{actor}</span>
+          </span>
         );
       })
       const yt_opts = {
@@ -224,24 +226,24 @@ export default class Movie extends Component {
               <div className="movie__video-player">
                 <nav>
                   <div className="nav nav-tabs" id="nav-tab" role="tablist" onClick={this.onTabChange.bind(this)}>
-                    <a className="nav-item nav-link" id="nav-home-tab" data-toggle="tab" href="#nav-home">
+                    <a className="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home">
                       Home
                     </a>
                     <a className="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile">Profile
                     </a>
-                    <a className="nav-item nav-link active" id="nav-trailer-tab" data-toggle="tab" href="#nav-trailer">
+                    <a className="nav-item nav-link" id="nav-trailer-tab" data-toggle="tab" href="#nav-trailer">
                       Trailer
                     </a>
                   </div>
                 </nav>
                 <div className="tab-content" id="nav-tabContent">
-                  <div className="tab-pane fade" id="nav-home" role="tabpanel">
+                  <div className="tab-pane fade show active" id="nav-home" role="tabpanel">
                     Content of 1
                   </div>
                   <div className="tab-pane fade" id="nav-profile" role="tabpanel">
                     Content of 2
                   </div>
-                  <div className="tab-pane fade show active" id="nav-trailer" role="tabpanel">
+                  <div className="tab-pane fade" id="nav-trailer" role="tabpanel">
                     {yt_trailers}
                   </div>
                 </div>

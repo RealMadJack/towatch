@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 
 
 export const csrftoken_str = Cookies.get('csrftoken');
-console.log(csrftoken_str)
+// console.log(csrftoken_str)
 
 
 const CSRFToken = () => {
