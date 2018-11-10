@@ -93,7 +93,7 @@ export default class MoviePanel extends Component {
         });
 
         return(
-          <div className="col-md-3" style={col_style} key={movie.id}>
+          <div className="col-md-4 col-lg-3 col-sm-12" style={col_style} key={movie.id}>
             <div className="card">
               <a className="card__moviepanel" href={moviepanel_url}>
                 <span>{movie.moviepanel.name}</span>
@@ -108,7 +108,7 @@ export default class MoviePanel extends Component {
                 <h5 className="card-title">
                   <a href={movie_url}>{movie.name}</a>
                 </h5>
-                <p className="card-text">{movie.description.substring(0, 200)}...</p>
+                {/*<p className="card-text">{movie.description.substring(0, 200)}...</p>*/}
               </div>
               <div className="card-footer">
                 <small className="text-muted float-left">Published at: </small>

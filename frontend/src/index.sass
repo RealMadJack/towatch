@@ -59,7 +59,9 @@ code
   margin-bottom: 30px
 
 .yt_player
+  position: relative
   width: $yt-player-w
+  // height: 100% // then change container height
   max-width: $yt-player-maxw
   min-width: $yt-player-minw
 
@@ -112,6 +114,14 @@ code
         color: $color
     &__movie-link
       position: relative
+      width: 100%
+      height: 360px
+      .card-img-top
+        width: 100%
+        height: 100%
+        object-fit: fill
+        max-width: 100%
+        max-height: 360px
       &::before
         transition: all .2s ease-in-out
         content: ''
@@ -125,12 +135,6 @@ code
       &:hover, &:focus
         &::before
           background-color: $accent-hover-rgba
-    .card-img-top
-      width: 100%
-      height: auto
-      object-fit: fill
-      max-width: 100%
-      max-height: 360px
   .card-body
     .card-title
       display: flex
@@ -146,6 +150,9 @@ code
           color: $accent-hover
       .movie-rating
         display: flex
+        align-items: flex-end
+        position: relative
+        top: -1px
         .rating-star
           width: 20px
           height: 20px
@@ -162,4 +169,43 @@ code
 
 
 
-@import "media"
+
+
+/* Large Devices, Wide Screens */
+@media only screen and (max-width : 1200px)
+  .card-deck
+    .card
+      &__movie-link
+        height: 320px
+
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width : 992px)
+  /**/
+
+
+/* Small Devices, Tablets */
+@media only screen and (max-width : 768px)
+  .card-deck
+    width: 100%
+    .card
+      max-width: 350px
+      margin-left: auto
+      margin-right: auto
+      &__movie-link
+        height: 360px
+
+
+/* Extra Small Devices, Phones */
+@media only screen and (max-width : 576px)
+  /**/
+
+
+/* Extra Small Devices, Phones */
+@media only screen and (max-width : 480px)
+  /**/
+
+
+/* Custom, iPhone Retina */
+@media only screen and (max-width : 320px)
+  /**/
